@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Sort Pacman Mirrors by speed
+sudo pacman-mirrors --fasttrack
+
