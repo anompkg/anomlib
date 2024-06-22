@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Check if a video is an audio (doesn't contains a pictures)
+# Get the File Metadata info
+file --brief
+
+# Open video as an audio
+# in order to keep it under console control
+# BC If we will open that as a video, this audio will mv in the bg (and the control gonna be lost)
+mpv --no-video
