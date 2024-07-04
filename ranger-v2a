@@ -2,7 +2,7 @@
 
 # Check if a video is an audio (doesn't contains a pictures)
 # Get the File Metadata info
-file --brief
+exiftool
 
 # Open video as an audio
 # in order to keep it under console control
