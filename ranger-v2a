@@ -1,10 +1,9 @@
 #!/bin/bash
 
-stealth() {
-	# Hide Output in Stelth mode, and return result
-	"$@" 2>/dev/null >/dev/null
-	return $?
-}
+# Open Audio in terminal
+# And Video in Graphical Interface
+
+# FIXME: Not tested in Console yet.
 
 # Check if a video is an audio (doesn't contains a pictures)
 # Get the File Metadata info
