@@ -1,4 +1,6 @@
 #!/bin/sh
 
+UTUBE="${UTUBE-yt-dlp}"
+
 # Install Video From YouTube with all Subtitles and Keep artifacts
-yt-dlp --all-subs -k -- "$@"
+"$UTUBE" --all-subs -k -- "$@"
