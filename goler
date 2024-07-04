@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Install N pictures from Gallery 
+
+start=$1
+stop=$2
+
+url="$3"
+urlend="$4"
+
+step=1
+
+if let "step >= 0"; then step=1; fi
+
+i=$start
+while let "i < $stop"; do
+	wget "$url$i$urlend"
+	let "i += $step"
+done
