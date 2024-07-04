@@ -1,10 +1,21 @@
 #!/bin/bash
 
+stealth() {
+	# Hide Output in Stelth mode, and return result
+	"$@" 2>/dev/null >/dev/null
+	return $?
+}
+
 # Check if a video is an audio (doesn't contains a pictures)
 # Get the File Metadata info
-exiftool
+if exiftool "$@" | grep -i "Type[[:space:]]\+: video" 2>/dev/null >/dev/null ; then
+	nohup mpv -- "$@" >/tmp/nohup.out 2>/tmp/nohup.out &
+	disown
 
-# Open video as an audio
-# in order to keep it under console control
-# BC If we will open that as a video, this audio will mv in the bg (and the control gonna be lost)
-mpv --no-video
+else
+	# Open video as an audio
+	# in order to keep it under console control
+	# BC If we will open that as a video, this audio will mv in the bg (and the control gonna be lost)
+	mpv --no-video -- "$@"
+fi
+
