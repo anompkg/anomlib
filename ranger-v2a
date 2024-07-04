@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# README: BugFix: fixes audio .webm problem.
+
 # Open Audio in terminal
 # And Video in Graphical Interface
 
