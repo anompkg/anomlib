@@ -1,3 +1,4 @@
 #!/bin/sh
 
+# Install Video From YouTube with all Subtitles and Keep artifacts
 yt-dlp --all-subs -k -- "$@"
