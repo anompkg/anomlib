@@ -1,20 +1,26 @@
 #!/bin/bash
 
-# README: BugFix: fixes audio .webm problem.
+# README: BugFix: fixes audio .webm problem,
+# when you're trying to open that in mpv.
 
 # Open Audio in terminal
 # And Video in Graphical Interface
 
 # FIXME: Not tested in Console yet.
 
-# Check if a video is an audio (doesn't contains a pictures)
-# Get the File Metadata info
-if exiftool "$@" | grep -i "Type[[:space:]]\+: video" 2>/dev/null >/dev/null ; then
+is_video() {
+	# Check if a webm video is an audio (doesn't contains a pictures)
+	# Get the File Metadata info
+	exiftool "$@" | grep -i "Type[[:space:]]\+: video" 2>/dev/null >/dev/null 
+}
+
+if is_video "$@"; then
+	# Open Video in GUI
 	nohup mpv -- "$@" >/tmp/nohup.out 2>/tmp/nohup.out &
 	disown
 
 else
-	# Open video as an audio
+	# Open video webm as an audio in TUI
 	# in order to keep it under console control
 	# BC If we will open that as a video, this audio will mv in the bg (and the control gonna be lost)
 	mpv --no-video -- "$@"
