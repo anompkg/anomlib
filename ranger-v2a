@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Check if a video is an audio (doesn't contains a pictures)
 # Get the File Metadata info
