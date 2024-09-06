@@ -1,0 +1,38 @@
+#!/bin/bash
+
+mkdir -p ~/.local/log
+log="$HOME/.local/log/.dowith.log"
+
+# run commands (as arguments) in a command in interactive (loop) mode
+dowith() {
+
+	local interpretor="$@"
+	local status
+
+	# public
+	local welcomeMSG="% "
+
+	echo -en "$welcomeMSG"
+
+	# run input-command in a interpretor with args
+	while read Command; do
+
+		# log this command in temp hitstory file
+		echo "$interpretor $Command" >> "$log"
+
+		# run command in interpretor
+		$interpretor $Command
+
+		# keep returned error-code
+		status=$?
+
+		echo -en "$welcomeMSG"
+
+	done
+
+}
+
+# Run this function as application
+dowith "$@"
+
+

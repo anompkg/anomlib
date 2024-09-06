@@ -1,0 +1,38 @@
+* Dowith
+Run selected command in loop
+using command (with args) as meta-interpreter, and user input as args
+
+* Eval launcher
+Using `eval` command as a bases of meta-interpeter
+
+* eval-launcher Commands
+'break' - stop interpreter cycle for exit
+Also for exit You can use Ctrl+D
+
+* Run only /bin/ commands and ignore aliases
+    ` dowith command `
+
+* Emulate interactive git shell
+    `dowith git`
+% status
+git status
+
+...
+
+nothing to commit, working tree clean
+
+* Emulate shell inside shell
+    `dowith eval`
+
+* Install all videos, pages from dowith typed links
+    `dowith youtube-dl --`
+    `dowith yt-dlp --`
+    `dowith curl --`
+    `dowith wget --`
+
+
+* Some interactive commands by swayconfig
+    `dowith swaymsg`
+* also some i3-config commands
+    `dowith i3-msg`
+
