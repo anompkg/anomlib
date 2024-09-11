@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# this file es a free software
+# license gnu-gpl-v3
+# copyleft unisoft
+
+# bug
+# if default value of buffer equale to value of first line
+# then the line be omitted...
+
+# fix
+# we can print first line if buffer nonchanged
+
+w2v() {
+  local w2v_line w2v_buffer w2v
+
+  # remove all clone lines
+  while read w2v_line; do
+
+    # dont print the line again
+    # print only one from the clones,origin
+    if [[ "y" != "$w2v" || "$w2v_buffer" != "$w2v_line" ]]; then
+      echo "$w2v_line"
+    fi
+
+    w2v_buffer="$w2v_line"
+
+    # "buffer changed?"
+    w2v="y"
+  done
+}
+
+w2v "$@"
