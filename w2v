@@ -8,22 +8,23 @@
 # we can print first line if buffer nonchanged
 
 w2v() {
-  local w2v_line w2v_buffer changed
+    local buffer
 
-  # remove all clone lines
-  while read w2v_line; do
+    # Clean Doublicate lines
+    while read line; do
 
-    # dont print the line again
-    # print only one from the clones,origin
-    if [[ "y" != "$changed" || "$w2v_buffer" != "$w2v_line" ]]; then
-      echo "$w2v_line"
-    fi
+	# Print common line only once
+	if [[ "$buffer" != "$line" ]]; then
+	    echo "$line"
+	fi
 
-    w2v_buffer="$w2v_line"
-
-    # "buffer changed?"
-    changed="y"
-  done
+	# Store previous line, so we can check if next is clone or not
+	buffer="$line"
+    done
 }
 
-w2v "$@"
+
+file="${1-/dev/stdin}"
+
+cat "$file" | w2v
+
