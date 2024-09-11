@@ -1,0 +1,4 @@
+# Ignore Cache files
+*~
+*.html
+
