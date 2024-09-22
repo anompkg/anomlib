@@ -1,0 +1,8 @@
+#!/bin/bash
+
+unemptydirs() {
+	# Recursively remove empty directries
+	find -type d -empty -delete "$@"
+}
+
+unemptydirs "$@"
