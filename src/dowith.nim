@@ -1,6 +1,9 @@
 from std/cmdline import commandLineParams
 from std/osproc import startProcess, ProcessOption, waitForExit, close, execProcess
-#from std/os import fileExists
+
+discard execProcess("/usr/bin/mkdir", args=["-p", "log"], options={})
+var log = "log/.dowith.log"
+
 
 proc runCommand*(command: string, args: openArray[string]): int =
   ## This will run a command with the given args and return its exit code upon completion
@@ -8,39 +11,40 @@ proc runCommand*(command: string, args: openArray[string]): int =
   result = process.waitForExit()
   process.close()
 
-discard runCommand("/usr/bin/mkdir", args=["-p", "~/.local/log"])
 
-# execProc( )
-var log = "$HOME/.local/log/.dowith.log"
-
-proc input(line*:string, promt="% "): bool =
+proc input(line: var string, promt="% "): bool =
   # Default promt is "% "
   stdout.write promt
-  
-  # Ask Users commands in real time 
+
+  # Ask Users commands in real time
   stdin.readLine(line)
 
-proc dowith(commandName="/bin/echo", args:seq[string], promt="% "): int =
-  var line: string, params = args
 
-  # Ask Users commands in real time 
+proc dowith(commandName="/bin/echo", args:seq[string], promt="% "): int =
+  var line: string
+
+  # Ask Users commands in real time
   while input(line, promt):
 
-    # Don't add line in args, if empty
-    if line != "":
-      params.add(line)
+    # Run Interpreter in loop
+    case line:
+      of "":
+        # Run base command
+        result = runCommand(commandName, args=args)
+      of "exit":
+        return 0
+      else:
+        # Run sub-command
+        result = runCommand(commandName, args=args & @[line])
 
-    # Run sub-command
-    result = runCommand(commandName, args=params)
 
-    # Reset arguments
-    params = args
-
-
+# Take arguments and script's name separate
 var
   cmdName = commandLineParams()[0]
   args = commandLineParams()[1 .. ^1]
 
+
+# Run dowith with base command, and base args in interactive mode
 discard dowith(cmdName, args)
 
 
