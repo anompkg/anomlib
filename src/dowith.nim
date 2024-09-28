@@ -1,8 +1,5 @@
 from std/cmdline import commandLineParams
-from std/osproc import startProcess, ProcessOption, waitForExit, close, execProcess
-
-discard execProcess("/usr/bin/mkdir", args=["-p", "log"], options={})
-var log = "log/.dowith.log"
+from std/osproc import startProcess, waitForExit, close, ProcessOption
 
 
 proc runCommand*(command: string, args: openArray[string]): int =
@@ -27,15 +24,13 @@ proc dowith(commandName="/bin/echo", args:seq[string], promt="% "): int =
   while input(line, promt):
 
     # Run Interpreter in loop
-    case line:
-      of "":
-        # Run base command
-        result = runCommand(commandName, args=args)
-      of "exit":
-        return 0
-      else:
-        # Run sub-command
-        result = runCommand(commandName, args=args & @[line])
+    case line
+      # Run base command:
+      of "": result = runCommand(commandName, args=args)
+      # exit command
+      of "exit": return 0
+      # Run sub-command
+      else: result = runCommand(commandName, args=args & line)
 
 
 # Take arguments and script's name separate
@@ -46,5 +41,4 @@ var
 
 # Run dowith with base command, and base args in interactive mode
 discard dowith(cmdName, args)
-
 
