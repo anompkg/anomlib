@@ -1,7 +1,7 @@
 #!/bin/bash
 
 mkdir -p ~/.local/log
-log="$HOME/.local/log/.dowith.log"
+dowithLog="${dowithLog-$HOME/.local/log/.dowith.log}"
 
 # run commands (as arguments) in a command in interactive (loop) mode
 dowith() {
@@ -18,7 +18,7 @@ dowith() {
 	while read Command; do
 
 		# log this command in temp hitstory file
-		echo "$interpretor $Command" >> "$log"
+		echo "$interpretor $Command" >> "$dowithLog"
 
 		# run command in interpretor
 		$interpretor $Command
