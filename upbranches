@@ -1,0 +1,41 @@
+#!/bin/sh
+
+
+getBranches() {
+    # Pull up all branches
+    git branch -r | sed "s/^[[:space:]]\+//;s|origin/||;/^HEAD/d"
+}
+
+
+getBranch() {
+    # Get current branch
+    git branch | grep "^* " | sed "s/^* //"
+}
+
+
+pullBranch() {
+    local branch="$1"
+    
+    git checkout "$branch"
+    git switch "$branch"
+    git pull --set-upstream origin "$branch"
+}
+
+
+pullBranches() {
+    # Update all branches
+    for i in `getBranches`; do
+	pullBranch "$i"
+    done
+}
+
+
+# Remember current branch
+branch=`getBranch`
+
+# Update branches
+pullBranches
+
+# Go back to a pinned branch
+git switch "$branch"
+
