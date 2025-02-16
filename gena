@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# gen range of numbers with %{nums:1-9,0}%, where nums is name, the dash for ranges and the comma for list of numbers (or ranges btw numbers)
+
+### Example with sway config:
+
+#
+# Workspaces:
+#
+
+# Switch to workspace
+# bindsym $mod+1 workspace number 1
+# bindsym $mod+2 workspace number 2
+# bindsym $mod+3 workspace number 3
+# bindsym $mod+4 workspace number 4
+# bindsym $mod+5 workspace number 5
+# bindsym $mod+6 workspace number 6
+# bindsym $mod+7 workspace number 7
+# bindsym $mod+8 workspace number 8
+# bindsym $mod+9 workspace number 9
+# bindsym $mod+0 workspace number 10
+
+## can be shorten to:
+
+# bindsym $mod+%{num:1-9}% workspace number %{num}%
+# bindsym $mod+0 workspace number 10
+
+
+### Another sway examples:
+
+## Move the focused window with the same, but add Shift
+# bindsym $mod+Shift+$left move left
+# bindsym $mod+Shift+$down move down
+# bindsym $mod+Shift+$up move up
+# bindsym $mod+Shift+$right move right
+## Ditto, with arrow keys
+# bindsym $mod+Shift+Left move left
+# bindsym $mod+Shift+Down move down
+# bindsym $mod+Shift+Up move up
+# bindsym $mod+Shift+Right move right
+
+## could be shorten to:
+
+## Move the focused window with the same, but add Shift
+# bindsym $mod+Shift+$%{arrow:left,down,up,right}% move %{arrow}%
+## Ditto, with arrow keys
+# bindsym $mod+Shift+%{arrow:left,down,up,right}% move %{arrow}%
+
