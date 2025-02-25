@@ -22,7 +22,7 @@
 
 ## can be shorten to:
 
-# bindsym $mod+%{num:1-9}% workspace number %{num}%
+# bindsym $mod+%(num=1-9)% workspace number %[num]%
 # bindsym $mod+0 workspace number 10
 
 
