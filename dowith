@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 mkdir -p ~/.local/log
 dowithLog="${dowithLog-$HOME/.local/log/.dowith.log}"
