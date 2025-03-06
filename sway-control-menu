@@ -1,0 +1,39 @@
+#!/bin/sh
+
+
+# you can reboot or shutdown system
+# you can close sway
+# You reload sway configuration
+
+controlCommands="reconfigure
+reload
+kill
+quit
+close
+exit
+reboot
+shutdown
+poweroff
+close-laptop
+logout
+lock-laptop"
+
+# select a sway-control command
+selected=$( wmenu -ip "Sway Ctrl!" <<< "$controlCommands" )
+
+# echo selected command
+echo $selected
+
+# run selected action
+case "$selected" in
+    ("quit")
+	echo "quit"
+	;;
+    ("reload")
+	swaymsg "reload"
+    ("kill")
+	swaymsg "kill"
+    (*)
+	./sway-control-menu
+	;;
+esac
