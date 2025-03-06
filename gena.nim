@@ -24,3 +24,25 @@
 #  for value in genaBlock:
 #   gen with replace use case with value
 #   gen with replace genaBlock.raw with value
+
+# 0. получити список слів, та можна назва списка
+# 1. получити підставлюючі слова
+
+#type Range:
+#  
+
+
+import std/tables
+
+
+# returns 
+proc getRanges(gena: string) =
+      var ranges: Table[system.string, system.string] = initTable[string, string]()
+      values = gena.split(":")
+      #if it has only 1 element than auto name with an index.
+      if 2: values=values[2].split(",")
+      elif 1: name="#0", values=values[0]
+      else: return
+      return name, values
+
+getRanges()
