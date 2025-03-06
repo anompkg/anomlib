@@ -5,7 +5,7 @@
 # you can close sway
 # You reload sway configuration
 
-controlCommands="reconfigure
+controlMenu="reconfigure
 reload
 kill
 quit
@@ -19,7 +19,7 @@ logout
 lock-laptop"
 
 # select a sway-control command
-selected=$( wmenu -ip "Sway Ctrl!" <<< "$controlCommands" )
+selected=$( wmenu -ip "Sway Ctrl!" <<< "$controlMenu" )
 
 # echo selected command
 echo $selected
