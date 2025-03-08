@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# toggle night light
+pkill -f wlsunset || wlsunset
