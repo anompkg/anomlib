@@ -6,29 +6,29 @@ dowithLog="${dowithLog-$HOME/.local/log/.dowith.log}"
 # run commands (as arguments) in a command in interactive (loop) mode
 dowith() {
 
-	local interpretor="$@"
-	local status
+    local interpretor="$@"
+    local status
 
-	# public
-	local welcomeMSG="% "
+    # public
+    local welcomeMSG="% "
 
-	echo -en "$welcomeMSG"
+    echo -en "$welcomeMSG"
 
-	# run input-command in a interpretor with args
-	while read Command; do
+    # run input-command in a interpretor with args
+    while read Command; do
 
-		# log this command in temp hitstory file
-		echo "$interpretor $Command" >> "$dowithLog"
+	   # log this command in temp hitstory file
+	   echo "$interpretor $Command" >> "$dowithLog"
 
-		# run command in interpretor
-		$interpretor $Command
+	   # run command in interpretor
+	   $interpretor $Command
 
-		# keep returned error-code
-		status=$?
+	   # keep returned error-code
+	   status=$?
 
-		echo -en "$welcomeMSG"
+	   echo -en "$welcomeMSG"
 
-	done
+    done
 
 }
 
