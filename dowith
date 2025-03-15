@@ -1,7 +1,15 @@
 #!/bin/sh
 
-mkdir -p ~/.local/log
-dowithLog="${dowithLog-$HOME/.local/log/.dowith.log}"
+
+mkdir -p ~/.cache/dowith
+dowithCache="${dowithCache-$HOME/.cache/dowith}"
+dowithLog="${dowithLog-$dowithCache/dowith.log}"
+
+
+dowith_input() {
+    # read a command, but we use readline wrapper :D
+    rlwrap -pYellow -S '% ' -H "$dowithCache/$*.histfile" -o cat
+}
 
 # run commands (as arguments) in a command in interactive (loop) mode
 dowith() {
@@ -15,11 +23,15 @@ dowith() {
     echo -en "$welcomeMSG"
 
     # run input-command in a interpretor with args
-    while read Command; do
+    while Command=$(dowith_input "$@"); do
 
-       # log this command in temp hitstory file
-       echo "$interpretor $Command" >> "$dowithLog"
+	if [[ "$Command" == "exit" ]]; then
+	    break
+	fi
 
+	# log this command in temp hitstory file
+	echo "$interpretor $Command" >> "$dowithLog"
+	
 	# run command in interpretor
 	$interpretor $Command
 
