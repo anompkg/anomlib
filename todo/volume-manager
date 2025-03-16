@@ -1,0 +1,18 @@
+#!/bin/sh
+
+# usage of woluman (Volume Manager):
+# woluman <command> <set> <get> [inc] [dec]   []
+
+# if you don't have get functionality, you can skip it with ""
+# woluman will create a file to track it for itself
+
+# The inc and dec funcs are optional
+# woluman will emulate them with set func
+
+## default values:
+# Note: We don't recommend to have brightness nearly lower than 2%
+# max=100 min=1 inc=5 dec=5
+
+## you can use waluman's configuration with %[ ]% spec symbols:
+# brightnessctl set 5%- => woluman brightnessctl "set" "%[inc]%%+" "%[dec]%%-"
+# brightnessctl set 5%+ => brightnessctl set %[inc]%%-
