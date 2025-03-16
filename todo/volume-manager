@@ -1,13 +1,15 @@
 #!/bin/sh
 
 # usage of woluman (Volume Manager):
-# woluman <command> <set> <get> [inc] [dec]   []
+# woluman <plugin> <action>
 
-# if you don't have get functionality, you can skip it with ""
-# woluman will create a file to track it for itself
+# it's better and easier to emulate inc, dec and get functions for set function
+# just to call it when we need that
 
-# The inc and dec funcs are optional
-# woluman will emulate them with set func
+# if you don't have the 'get' functionality
+# We can create a file to track it for ourselves
+
+# We can construct The inc and dec funcs out of set func
 
 ## default values:
 # Note: We don't recommend to have brightness nearly lower than 2%
