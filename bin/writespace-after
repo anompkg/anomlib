@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Write all chars with space btw them
+sed "s/\(.\)/\1 /g"
