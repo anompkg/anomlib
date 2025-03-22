@@ -1,0 +1,5 @@
+#!/bin/sh
+
+exec 3<> /tmp/foo  #open fd 3.
+echo "test" >&3
+exec 3>&- #close fd 3.
