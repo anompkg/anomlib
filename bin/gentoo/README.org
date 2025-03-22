@@ -1,8 +1,10 @@
 * Chroot into gentoo (2nd OS) from Fedora
-I used this script as libraries, so you need to source it.
+Import this with `source` as a library in your shell.
+Some libs should be sourced after chroot on the Gentoo side :D
 
-* Sources
+* Sources, Where I have found all this on
 Unfortunally idk the sources where i got all this from.
 But as you can see it's in Russian...
 So i guess i have found it on the Gentoo Handbook (RU version) Pages
-
+It was 2 years ago.
+I was just Trying Gentoo, Hyperbola, Arch and others a bit.
