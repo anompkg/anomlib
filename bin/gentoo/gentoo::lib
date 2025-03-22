@@ -1,0 +1,9 @@
+#!/bin/sh
+
+source /etc/profile
+export PS1="(chroot) ${PS1}"
+
+# mount all devices from custom gentoo fstab list
+mount -a
+swapon -a
+

@@ -1,0 +1,8 @@
+* Chroot into gentoo (2nd OS) from Fedora
+I used this script as libraries, so you need to source it.
+
+* Sources
+Unfortunally idk the sources where i got all this from.
+But as you can see it's in Russian...
+So i guess i have found it on the Gentoo Handbook (RU version) Pages
+
