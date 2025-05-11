@@ -1,19 +1,21 @@
 #!/bin/sh
 
-commitHash="$1"
-
 # Get 1st 7 symbols from git commit hash
 gitShortCommit(){
+    local commitHash="$1"
+
     printf "$commitHash" | cut -c1-7
 }
 
 
 gitRecommit(){
-    shortCom=`gitShortCommit`
+    local commitHash="$1"
+
+    local shortCom=`gitShortCommit "$commitHash"`
     
-    # change
-    GIT_EDITOR="sed 's/^pick $shortCom /edit $shortCom /g' -i" git rebase -i "$commitHash^"
-    git reset -i "$commitHash^"
+    # change TODO: sed -i
+    GIT_EDITOR="sed 's/^pick $shortCom /edit $shortCom /g' -i" git rebase -i "${commitHash}^"
+    git reset "${commitHash}^"
 }
 
-
+gitRecommit "$@"
