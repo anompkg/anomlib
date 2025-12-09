@@ -2,6 +2,8 @@
 
 # Install N pictures from Gallery 
 
+GETGALLERY="${GETGALLERY=wget}"
+
 start=$1
 stop=$2
 
@@ -14,6 +16,6 @@ if let "step >= 0"; then step=1; fi
 
 i=$start
 while let "i < $stop"; do
-	wget "$url$i$urlend"
+	$GETGALLERY "$url$i$urlend"
 	let "i += $step"
 done
