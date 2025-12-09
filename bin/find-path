@@ -1,0 +1,15 @@
+#!/bin/sh
+
+findPath(){
+    local item="$1" path="$2"
+    
+    for i in ${path//:/ }; do
+	if [[ -f "$i/$item" ]]; then
+	    echo "$i/$item"
+	# else
+	#     echo "- $i/$item"
+	fi
+    done
+}
+
+findPath "$@"
