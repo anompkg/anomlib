@@ -42,6 +42,7 @@ dowith() {
 
     done
 
+    echo "$0: exiting '$@'"
 }
 
 # Run this function as application
