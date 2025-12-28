@@ -7,10 +7,11 @@ function denoisefy() {
     audio="$1"
     input="${audio}.mp3"
     output="${audio}_output.wav"
-    cleaned_output="${audio}_cleaned.wav"
+    cleaned_output="${audio}_cleaned(${noiselvl}).wav"
     noise_prof="${audio}_noise.prof"
     ff convert "${input}" to wav
     sox "$output" -n noiseprof "$noise_prof"
     sox "$output" "$cleaned_output" noisered noise.prof ${noiselvl}
 }
 
+denoisefy "$@"
