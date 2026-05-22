@@ -9,13 +9,7 @@ stop=$2
 
 url="$3"
 urlend="$4"
+ggType="${ggType-jpeg}"
 
-step=1
+curl "$url[$start-$stop]$urlend" -o "local-#1.$ggType"
 
-if let "step >= 0"; then step=1; fi
-
-i=$start
-while let "i < $stop"; do
-	$GETGALLERY "$url$i$urlend"
-	let "i += $step"
-done
