@@ -2,7 +2,10 @@
 
 # Install N pictures from Gallery 
 
-GETGALLERY="${GETGALLERY=wget}"
+ggHome="${ggHome-$HOME/Pictures/gg}"
+
+mkdir -p "$ggHome/$hash"
+cd "$ggHome/$hash"
 
 start=$1
 stop=$2
@@ -11,5 +14,21 @@ url="$3"
 urlend="$4"
 ggType="${ggType-jpeg}"
 
-curl "$url[$start-$stop]$urlend" -o "local-#1.$ggType"
+request="$url[$start-$stop]$urlend"
+
+hash=` echo "$request" | sha256sum | sed "s/^\(.*\) .*/\1/" `
+
+echo "hash: $hash"
+
+ls "$ggHome/$hash" # >/dev/null 2>/dev/null
+
+if [[ "$?" == "2" ]]; then
+	mkdir -p "$ggHome/$hash"
+	cd "$ggHome/$hash"
+else
+	echo "gg: Error: Gallery was already downloaded."
+	exit 2
+fi
+
+curl "$request" -o "local-#1.$ggType"
 
