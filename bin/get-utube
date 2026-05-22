@@ -1,6 +1,10 @@
 #!/bin/sh
 
 UTUBE="${UTUBE-yt-dlp}"
+UTUBE_HOME="${UTUBE_HOME-$HOME/Videos/yt}"
+
+mkdir -p "$UTUBE_HOME"
+cd "$UTUBE_HOME"
 
 # Install Video From YouTube with all Subtitles and Keep artifacts
-"$UTUBE" --all-subs -k -- "$@"
+"$UTUBE" --all-subs -- "$@"
