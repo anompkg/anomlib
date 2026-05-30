@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+
+"""About:
+sway-quit uses readline to get input
+
+Usage:
+main commainds:
+  reconfigure, quit, sway
+
+sway commands:
+  reload, edit config, select terminal (mod+Enter), select Menu (mod+D)
+
+quit commands:
+  reboot, exit sway, shut down, kill (select and kill process)
+
+reconfigure <variable>:
+  reconfigure allows you to reconfigure variables used in sway-quit
+
+  You can:
+  Set which editor should open sway config.
+  Select path to sway config.
+  change commands which should reboot, shut down, etc. your computor (note different OS may have different commands).
+  chage where sway-quit's config should be located.
+
+Example:
+> sway-quit reconfigure quit reboot
+loginctl reboot
+# written into ~/.local/share/anom-bins/sway-quit.config
+# confstyle=ini
+[quit]
+reboot = "loginctl reboot"
+"""
