@@ -7,6 +7,7 @@ authors = [
 description = "A small package with anom's libraries"
 readme = "README.md"
 requires-python = ">=3.9"
+dependencies = []
 classifiers = [
     "Programming Language :: Python :: 3",
     "Operating System :: OS Independent",
@@ -17,4 +18,8 @@ license-files = ["LICEN[CS]E*"]
 [project.urls]
 Homepage = "https://github.com/pypa/sampleproject"
 Issues = "https://github.com/pypa/sampleproject/issues"
+
+[dependency-groups]
+dev = []
+fun = []
 
