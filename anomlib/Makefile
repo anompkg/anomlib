@@ -6,8 +6,8 @@ build: venv clean
 	uv build
 
 venv:
-	# Make sure venv is created
-	[[ -d .venv ]] || uv venv
+	# Making sure venv is created
+	@ [[ -d .venv ]] || uv venv
 
 require-twine: build
 	# Install Twine
@@ -18,9 +18,8 @@ upload: build require-twine
 	uv run python3 -m twine upload --repository testpypi dist/* --verbose
 
 clean:
-	uv clean
-	# Clean build's cache artifacts
-	rm -r dist/ src/anomlib_package_transpkg.egg-info
+	# Cleaning build's cache artifacts...
+	@rm -r dist/ src/anomlib_package_transpkg.egg-info ||:
 
 install: build
 	# Installing your newly uploaded package using uv.
