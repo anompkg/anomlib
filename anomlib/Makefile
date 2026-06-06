@@ -30,5 +30,17 @@ uninstall:
 	# Removing your installed package using uv.
 	uv pip uninstall anomlib-package-transpkg
 
+
 guide:
 	# learn how to pack with pip: https://packaging.python.org/en/latest/tutorials/packaging-projects
+
+
+## System
+system-require-twine:
+	# Install Twine
+	python3 -m pip install --upgrade twine
+
+system-install: build
+	# Installing your newly uploaded package using uv.
+	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg
+
