@@ -1,3 +1,5 @@
+version = 0.0.2
+
 default: install
 	# Installing anomlib by default
 
@@ -41,5 +43,5 @@ system-require-twine:
 
 system-install: build
 	# Installing your newly uploaded package using uv.
-	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg
+	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg==$(version)
 
