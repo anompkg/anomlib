@@ -8,8 +8,8 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "anomlib-package-transpkg"
-version = "0.0.2"
+name = "anomlib"
+version = "0.0.4"
 source = { virtual = "." }
 
 [package.metadata]

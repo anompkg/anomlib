@@ -17,19 +17,21 @@ require-twine: build
 
 upload: build require-twine
 	# Upload Packages
-	uv run python3 -m twine upload --repository testpypi dist/* --verbose
+	#uv run python3 -m twine upload --repository testpypi dist/* --verbose
+	uv run python3 -m twine upload dist/* --verbose
 
 clean:
 	# Cleaning build's cache artifacts...
-	@rm -r dist/ src/anomlib_package_transpkg.egg-info ||:
+	@rm -r dist/ src/anomlib.egg-info ||:
 
 install: build
 	# Installing your newly uploaded package using uv.
-	uv pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg
+	#uv pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg
+	uv pip install anomlib
 
 uninstall:
 	# Removing your installed package using uv.
-	uv pip uninstall anomlib-package-transpkg
+	uv pip uninstall anomlib
 
 
 guide:
@@ -43,5 +45,5 @@ system-require-twine:
 
 system-install: build
 	# Installing your newly uploaded package using uv.
-	python3 -m pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg==$(version)
+	python3 -m pip install anomlib==$(version)
 
