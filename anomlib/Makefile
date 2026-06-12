@@ -1,4 +1,7 @@
-version = 0.0.2
+version = $(shell uv version --short)
+
+version:
+	echo version: $(version)
 
 default: install
 	# Installing anomlib by default
@@ -15,26 +18,26 @@ require-twine: build
 	# Install Twine
 	uv pip install --upgrade twine
 
-push:
+upload: require-twine
 	# Upload Packages
-	#uv run python3 -m twine upload --repository testpypi dist/* --verbose
-	uv run python3 -m twine upload dist/* --verbose
-
-upload: build require-twine push
+	@uv run python3 -m twine upload dist/* --verbose
 
 clean:
 	# Cleaning build's cache artifacts...
 	@rm -r dist/ src/anomlib.egg-info ||:
 
-install: build
-	# Installing your newly uploaded package using uv.
-	#uv pip install --index-url https://test.pypi.org/simple/ --no-deps anomlib-package-transpkg
-	uv pip install anomlib
-
 uninstall:
-	# Removing your installed package using uv.
+	# Removing old versions
 	uv pip uninstall anomlib
+	uv pip uninstall transpkg
 
+add:
+	# Installing your newly uploaded package using uv.
+	uv pip install anomlib
+	uv pip install transpkg
+
+upgrade: upload install
+reinstall: uninstall add
 
 guide:
 	# learn how to pack with pip: https://packaging.python.org/en/latest/tutorials/packaging-projects
@@ -42,10 +45,10 @@ guide:
 
 ## System
 system-require-twine:
-	# Install Twine
+	# Globally Install Twine
 	python3 -m pip install --upgrade twine
 
 system-install: build
-	# Installing your newly uploaded package using uv.
+	# Globally install your newly uploaded package using pip.
 	python3 -m pip install anomlib==$(version)
 
