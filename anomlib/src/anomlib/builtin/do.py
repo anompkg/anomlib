@@ -113,7 +113,11 @@ def inputline(
     history = history if history else " ".join(args)
     history = anomtoolDoHistory / f"{history}.history"
     return read_command(f"{readline} -p{color} -S '{prompt}' -H '{history}' -o cat")
-    
+
+
+## Do will support params, but they needs to be added via --param=key=<value> or --param=flag, etc.
+## each --param call will update params dictionary.
+
 def do_repl(*args, **kwargs):
     print("args:", args)
     print("kwargs:", kwargs)
