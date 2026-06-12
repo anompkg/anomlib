@@ -16,6 +16,10 @@ SAME = 0
 DIFFERENT = 1
 TROUBLE = 2
 
+def runcmd(command):
+    with subprocess.Popen(command, shell=True) as process:
+        process.communicate()
+
 
 def execute_command(command):
     """
@@ -81,7 +85,7 @@ Errors:
 home = Path.home()
 
 anomtoolDoCache = home / ".cache/anomtool/do"
-anomtoolDoHistory = anomtoolDoCache / "do_history"
+anomtoolDoHistory = anomtoolDoCache / "history"
 anomtoolDoLog = anomtoolDoCache / "do.log"
 
 def mkdirs(path):
@@ -102,7 +106,7 @@ logging.basicConfig(filename=anomtoolDoLog, level=logging.DEBUG)
 def inputline(
         color = "Yellow",
         prompt = "% ",
-        history = "test",
+        history = "",
         readline = "rlwrap",
         args = sys.argv[1:]
     ):
@@ -110,27 +114,28 @@ def inputline(
     
     i can use any readline library when i figure out how to do it.
     Why so many wrappers? First make it work! Then make it beautiful!"""
-    history = history if history else " ".join(args)
-    history = anomtoolDoHistory / f"{history}.history"
-    return read_command(f"{readline} -p{color} -S '{prompt}' -H '{history}' -o cat")
+    _history = history if history else " ".join(args)
+    _history = anomtoolDoHistory / f"{_history}_history"
+    return read_command(f"{readline} -p{color} -S '{prompt}' -H '{_history}' -o cat")
 
 
 ## Do will support params, but they needs to be added via --param=key=<value> or --param=flag, etc.
 ## each --param call will update params dictionary.
 
 def do_repl(*args, **kwargs):
-    print("args:", args)
+    command = " ".join(kwargs["args"])
     print("kwargs:", kwargs)
-    "main function for 4g-with"
+    "main function for 'anomtool do'"
     while True:
-        cmd = inputline(*args, **kwargs)
+        cmd = inputline(**kwargs)
         print(cmd)
         if cmd == "exit":
-            logging.debug(f"4g-with: exiting command: {args}")
+            logging.debug(f"at-do: exiting command: {kwargs["args"]}")
             break
         elif not cmd:
-            logging.debug(f'4g-with: do nothing in this command: {args}')
+            logging.debug(f'at-do: do nothing in this command: {kwargs["args"]}')
             # Do nothing if cmd is empty
             pass
-        
-        logging.debug(f'4g-with: command: {cmd}; {args}')
+
+        runcmd(f"{command} {cmd}")
+        logging.debug(f'at-do: command: {command}  {cmd};')

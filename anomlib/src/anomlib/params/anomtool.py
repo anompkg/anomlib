@@ -60,10 +60,10 @@ commands = {
                 }
             },
             'history': {
-                'args': ['-H'],
+                'args': ['-H', '-g', '--group'],
                 'kwargs': {
                     'help': 'History file for %(prog)s program',
-                    'default': "test"
+                    'default': ""
                 }
             }
         },

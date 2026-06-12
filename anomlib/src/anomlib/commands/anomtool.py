@@ -55,7 +55,7 @@ def anomtool_do(p:ParamParser):
     "main function for 4g do"
 
     anomlib.builtin.do.do_repl(
-        args = p.args["original"],
+        args = p.args["all"],
         history = p.options["all"]["history"],
         readline = p.options["all"]["readline"],
         prompt = p.options["all"]["prompt"],
