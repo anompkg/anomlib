@@ -80,21 +80,21 @@ Errors:
 
 home = Path.home()
 
-forgyWithCache = home / ".cache/4g/with"
-forgyWithHistory = forgyWithCache / "history"
-withLog = forgyWithCache / "with.log"
+anomtoolDoCache = home / ".cache/anomtool/do"
+anomtoolDoHistory = anomtoolDoCache / "do_history"
+anomtoolDoLog = anomtoolDoCache / "do.log"
 
 def mkdirs(path):
-    if not os.path.exists(forgyWithCache):
-        os.makedirs(str(forgyWithCache))
+    if not os.path.exists(anomtoolDoCache):
+        os.makedirs(str(anomtoolDoCache))
 
-mkdirs(str(forgyWithCache))
-mkdirs(str(forgyWithHistory))
+mkdirs(str(anomtoolDoCache))
+mkdirs(str(anomtoolDoHistory))
 
 
 # Configure logging
 
-logging.basicConfig(filename=withLog, level=logging.DEBUG)
+logging.basicConfig(filename=anomtoolDoLog, level=logging.DEBUG)
 
 # Log messages
 
@@ -111,7 +111,7 @@ def inputline(
     i can use any readline library when i figure out how to do it.
     Why so many wrappers? First make it work! Then make it beautiful!"""
     history = history if history else " ".join(args)
-    history = forgyWithHistory / f"{history}.history"
+    history = anomtoolDoHistory / f"{history}.history"
     return read_command(f"{readline} -p{color} -S '{prompt}' -H '{history}' -o cat")
     
 def do_repl(*args, **kwargs):
