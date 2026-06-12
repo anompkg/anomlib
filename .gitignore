@@ -288,7 +288,7 @@ flycheck_*.el
 *.sig
 
 pkg/
-src/
+#src/
 
 # ---> Html
 
