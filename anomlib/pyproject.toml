@@ -1,11 +1,13 @@
 [project]
 name = "anomlib"
-version = "0.0.5"
-authors = [{ name = "🦌 Anom 🦌", email = "author@example.com" }]
+version = "0.0.14"
+authors = [{ name = "🦌 Anom 🦌", email = "tfed@tutamail.com" }]
 description = "A small package with anom's libraries"
 readme = "README.md"
 requires-python = ">=3.9"
-dependencies = []
+dependencies = [
+    "twine>=6.2.0",
+]
 classifiers = [
   "Programming Language :: Python :: 3",
   "Operating System :: OS Independent",
@@ -20,3 +22,6 @@ Issues = "https://github.com/pypa/sampleproject/issues"
 [dependency-groups]
 dev = []
 fun = []
+
+[project.scripts]
+anomtool = "anomlib.commands.anomtool:main"

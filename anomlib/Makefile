@@ -26,18 +26,22 @@ clean:
 	# Cleaning build's cache artifacts...
 	@rm -r dist/ src/anomlib.egg-info ||:
 
+gc:
+	# Cleaning uv pre-built cache artifacts...
+	uv clean
+
 uninstall:
 	# Removing old versions
 	uv pip uninstall anomlib
-	uv pip uninstall transpkg
 
 add:
 	# Installing your newly uploaded package using uv.
+	# Note: If you cant get fresher versions do `make gc'
 	uv pip install anomlib
-	uv pip install transpkg
 
-upgrade: upload install
-reinstall: uninstall add
+install: gc add
+reinstall: uninstall install
+upgrade: upload reinstall
 
 guide:
 	# learn how to pack with pip: https://packaging.python.org/en/latest/tutorials/packaging-projects
