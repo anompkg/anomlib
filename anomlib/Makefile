@@ -15,10 +15,12 @@ require-twine: build
 	# Install Twine
 	uv pip install --upgrade twine
 
-upload: build require-twine
+push:
 	# Upload Packages
 	#uv run python3 -m twine upload --repository testpypi dist/* --verbose
 	uv run python3 -m twine upload dist/* --verbose
+
+upload: build require-twine push
 
 clean:
 	# Cleaning build's cache artifacts...
