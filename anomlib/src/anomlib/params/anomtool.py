@@ -68,6 +68,38 @@ commands = {
             }
         },
     },
+    'picload': {
+        'options': {
+            'type': {
+                'args': ['-t', '--filetype'],
+                'kwargs': {
+                    'help': "Set picture's filetype.",
+                    'default': "jpeg"
+                }
+            },
+            'prompt': {
+                'args': ['-p'],
+                'kwargs': {
+                    'help': 'Set prompt.',
+                    'default': "with "
+                }
+            },
+            'readline': {
+                'args': ['-r', '-i', '--inputline'],
+                'kwargs': {
+                    'help': 'Set readline tool.',
+                    'default': "rlwrap"
+                }
+            },
+            'history': {
+                'args': ['-H', '-g', '--group'],
+                'kwargs': {
+                    'help': 'History file for %(prog)s program',
+                    'default': ""
+                }
+            }
+        },
+    },
     'repl': {}, # will be like 4g with but for interactively working with 4g.
     'help': {},
     'install': {},
