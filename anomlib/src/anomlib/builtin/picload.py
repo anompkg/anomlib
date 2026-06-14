@@ -1,3 +1,16 @@
+
+home = Path.home()
+
+anomtoolDoCache = home / ".cache/anomtool/do"
+anomtoolDoHistory = anomtoolDoCache / "history"
+anomtoolDoLog = anomtoolDoCache / "do.log"
+
+
+pillow.mkdirs(str(anomtoolDoCache))
+pillow.mkdirs(str(anomtoolDoHistory))
+
+
+
 def num_to_index(start, stop, end, url_begin="", urlend=""):
     fixure = len(str(end)) - len(str(start))
     # Fix url_begin if the number's power is weak
