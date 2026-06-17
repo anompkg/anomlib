@@ -1,4 +1,6 @@
 
+import subprocess, time
+
 # Diff Status Codes
 SAME = 0
 DIFFERENT = 1

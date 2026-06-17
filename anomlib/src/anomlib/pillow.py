@@ -31,3 +31,18 @@ def hashedString(s, hashTool="sha256"):
     h.update(s.encode()) # give a encoded string. Makes the String to the Hash 
     return h.hexdigest() # Return the Hash
 
+def hashValue(value, name=None, hashTool="md5"):
+    # Hash Value or value
+    valueHash = hashedString(value, hashTool)
+
+    # If name is None, False or Empty string: Just return hash
+    if not name:
+        return valueHash
+    
+    # Get name from URL if name undefined
+    elif name == True:
+        # Get Name while expecting that value is either URL or filepath.
+        name = value.split("/")[-1]
+
+    return f"{name}@{valueHash}"
+

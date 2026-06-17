@@ -37,17 +37,17 @@ import anomlib.builtin.do
 #import anomtool.foGive
 import anomlib.params.anomtool
 from anomlib.paramparser import ParamParser
+import anomlib.pillow
 
 
 ## Forgy's sub-Commands
 
-# def anomtool_hash(p:ParamParser):
-#     "main function of 4g-hash"
-#     for url in p.args["all"]:
-#         if p.options["all"]["source"]:
-#             print(anomtool.foGet.hashForgySource(url, p.options["all"]["hash"]))
-#         else:
-#             print(anomtool.foGet.hashedString(url, p.options["all"]["hash"]))
+def anomtool_hash(p:ParamParser):
+    "main function of anomtool-hash"
+    name = p.options["all"]["source"]
+    hashTool = p.options["all"]["hash"]
+    for url in p.args["all"]:
+        print(anomlib.pillow.hashForgySource(url, name=name, hashTool=hashTool))
 
 
 
@@ -74,8 +74,8 @@ def main():
     p = ParamParser(commands=anomlib.params.anomtool.commands)
 
     match p.command:
-        # case "hash":
-        #     anomtool_hash(p)
+        case "hash":
+            anomtool_hash(p)
         # case "pull":
         #     anomtool_pull(p)
         case "do":

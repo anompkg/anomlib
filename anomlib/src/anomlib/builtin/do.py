@@ -20,8 +20,8 @@ anomtoolDoHistory = anomtoolDoCache / "history"
 anomtoolDoLog = anomtoolDoCache / "do.log"
 
 
-pillow.mkdirs(str(anomtoolDoCache))
-pillow.mkdirs(str(anomtoolDoHistory))
+anomlib.pillow.mkdirs(str(anomtoolDoCache))
+anomlib.pillow.mkdirs(str(anomtoolDoHistory))
 
 
 # Configure logging
@@ -44,7 +44,7 @@ def inputline(
     Why so many wrappers? First make it work! Then make it beautiful!"""
     _history = history if history else " ".join(args)
     _history = anomtoolDoHistory / f"{_history}_history"
-    return read_command(f"{readline} -p{color} -S '{prompt}' -H '{_history}' -o cat")
+    return anomlib.shell.read_command(f"{readline} -p{color} -S '{prompt}' -H '{_history}' -o cat")
 
 
 ## Do will support params, but they needs to be added via --param=key=<value> or --param=flag, etc.
@@ -65,5 +65,5 @@ def do_repl(*args, **kwargs):
             # Do nothing if cmd is empty
             pass
 
-        runcmd(f"{command} {cmd}")
+        anomlib.shell.runcmd(f"{command} {cmd}")
         logging.debug(f'at-do: command: {command}  {cmd};')
