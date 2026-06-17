@@ -38,6 +38,7 @@ import anomlib.builtin.do
 import anomlib.params.anomtool
 from anomlib.paramparser import ParamParser
 import anomlib.pillow
+import anomlib.builtin.picload
 
 
 ## Forgy's sub-Commands
@@ -76,8 +77,8 @@ def main():
     match p.command:
         case "hash":
             anomtool_hash(p)
-        # case "pull":
-        #     anomtool_pull(p)
+        case "picload":
+            pass
         case "do":
             anomtool_do(p)
         # case "install":
