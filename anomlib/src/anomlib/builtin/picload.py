@@ -48,7 +48,8 @@ def curlRange(start, stop, url_begin="file_", urlend=".jpg"):
     return result
 
 
-def getGallery(start, stop, url_begin="file_", urlend=".jpg"):
+def getGallery(start, stop, url_begin="file_", urlend=".jpg",
+               ggHome=ggHome, ggType=ggType):
     hash = anomlib.pillow.hashedString(url_begin + urlend)
     print(hash)
     requests = curlRange(start, stop, url_begin, urlend)
@@ -59,16 +60,19 @@ def getGallery(start, stop, url_begin="file_", urlend=".jpg"):
     
     # Fixme: Change directory to current working directory
     
-    anomlib.pillow.mkdirs(str(ggHome / hash))
+    anomlib.pillow.mkdirs(str(Path(ggHome) / hash))
     
     print(requests)
-    # for request in requests:
-    #     anomlib.shell.runcmd(f"curl {request} -o 'local-#1.{ggType}'")
+    for request in requests:
+        print(f"curl '{request}' -o 'local2-#1.{ggType}'")
+        anomlib.shell.runcmd(f"curl {request} -o 'local-#1.{ggType}'")
 
 
 
-print()
-print(getGallery(1, 900, "file", ".png"))
-print(getGallery(1, 90, "file-", ".jpeg"))
-print(getGallery(1, 9, "file0", ".jpg"))
+# print()
+# # print(getGallery(1, 900, "file", ".png"))
+# # print(getGallery(1, 90, "file-", ".jpeg"))
+# print(getGallery(1, 23, "https://image.hdporncomics.com/uploads/disguised-lust-0", ".jpg"))
+# # print(getGallery(1, 5, "https://image.hdporncomics.com/uploads/angel-x-stitch-00", ".jpg"))
+# # print(getGallery(1, 11, "https://im.hdporncomics.com/uploads/560facf644dc7837b5bd6f2a726c6582/she-s-not-little-anymore-0", ".jpg"))
 

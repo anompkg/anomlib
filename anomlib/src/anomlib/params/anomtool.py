@@ -77,25 +77,34 @@ commands = {
                     'default': "jpeg"
                 }
             },
-            'prompt': {
-                'args': ['-p'],
+            'home': {
+                'args': ['-d', '--directory'],
                 'kwargs': {
-                    'help': 'Set prompt.',
-                    'default': "with "
+                    'help': 'Change Working Directory.',
+                    'default': "~/Pictures/gg"
                 }
             },
-            'readline': {
-                'args': ['-r', '-i', '--inputline'],
+            'ending': {
+                'args': ['-e', '--urlend'],
                 'kwargs': {
-                    'help': 'Set readline tool.',
-                    'default': "rlwrap"
+                    'help': "Url's ending",
+                    'default': ".jpg"
                 }
             },
-            'history': {
-                'args': ['-H', '-g', '--group'],
+            'start': {
+                'args': ['-s'],
                 'kwargs': {
-                    'help': 'History file for %(prog)s program',
-                    'default': ""
+                    'help': 'First Comic.',
+                    'default': 1,
+                    'type': int
+                }
+            },
+            'stop': {
+                'args': ['-S'],
+                'kwargs': {
+                    'help': 'Set Last Comic.',
+                    'default': 1,
+                    'type': int
                 }
             }
         },

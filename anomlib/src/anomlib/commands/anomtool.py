@@ -61,14 +61,20 @@ def anomtool_do(p:ParamParser):
         readline = p.options["all"]["readline"],
         prompt = p.options["all"]["prompt"],
         color = p.options["all"]["color"])
+import os
+def anomtool_picload(p:ParamParser):
+    "main function for anomtool picload"
 
-# def anomtool_pull(p:ParamParser):
-#     "main function for 4g pull"
+    start = p.options["all"]["start"]
+    stop = p.options["all"]["stop"]
+    urlend = p.options["all"]["ending"]
+    ggType = p.options["all"]["type"]
+    p.options["all"]["home"] = os.path.expanduser(p.options["all"]["home"])
+    ggHome = p.options["all"]["home"]
+    for url_begin in p.args["all"]:
+        anomlib.builtin.picload.getGallery(start, stop, url_begin, urlend, ggType=ggType, ggHome=ggHome)
+        # # print(getGallery(1, 90, "file-", ".jpeg"))
 
-#     for url in p.args["all"]:
-#         days = p.options["all"]["days"]
-#         hours = p.options["all"]["hours"]
-#         anomtool.foGive.pull(url, days=days, hours=hours)
 
 
 def main():
@@ -78,7 +84,7 @@ def main():
         case "hash":
             anomtool_hash(p)
         case "picload":
-            pass
+            anomtool_picload(p)
         case "do":
             anomtool_do(p)
         # case "install":
