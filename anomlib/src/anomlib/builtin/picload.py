@@ -54,14 +54,19 @@ def getGallery(start, stop, url_begin="file_", urlend=".jpg",
     print(hash)
     requests = curlRange(start, stop, url_begin, urlend)
     
-    # Fixme: Do not proceed if dir alr exist
+    ggDir = Path(ggHome) / hash
+    
+    # Do not proceed if dir alr exist
+    if os.path.isdir(ggDir):
+        print(f"The {hash} Files are already downloaded")
+        return
     
     # Fixme: Check that dir does not exist and then proceed
+    anomlib.pillow.mkdirs(str(ggDir))
     
     # Fixme: Change directory to current working directory
-    
-    anomlib.pillow.mkdirs(str(Path(ggHome) / hash))
-    
+    os.chdir(ggDir)
+
     print(requests)
     for request in requests:
         print(f"curl '{request}' -o 'local2-#1.{ggType}'")
