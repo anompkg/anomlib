@@ -31,6 +31,26 @@ def hashedString(s, hashTool="sha256"):
     h.update(s.encode()) # give a encoded string. Makes the String to the Hash 
     return h.hexdigest() # Return the Hash
 
+def _hash_file(input_file, hashTool="sha256"):
+    """Hash file Fearlessly.
+    hashTool supports hashlib's hash functions such as md5 or sha512. 
+    """
+    # input_file = input("Enter the name of the file: ")
+    # Note: Open file as 'bytes' not 'str' when 'rb' used.
+    # TODO: To encode 'str' into 'bytes' use "text".encode()
+    with open(input_file, 'rb') as file:
+        text = file.read()
+        result = vars(hashlib)[hashTool](text).hexdigest()
+    # TODO: It may be "tempting" to return just one hash, but reusing read file object can speed up process.
+    # return (md5_hash, sha1_hash, sha256_hash)
+    return result
+
+def hash_file(input_file):
+    try:
+        return _hash_file(input_file)
+    except IsADirectoryError:
+        return
+
 def hashValue(value, name=None, hashTool="md5"):
     # Hash Value or value
     valueHash = hashedString(value, hashTool)
