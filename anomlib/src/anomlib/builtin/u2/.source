@@ -1,0 +1,1 @@
+yt-dlp --sub-langs all --yes-playlist https://www.youtube.com/playlist?list=PLRBp0Fe2Gpgn8Y9qI-p0aTxVtw8onBSFj "$@"

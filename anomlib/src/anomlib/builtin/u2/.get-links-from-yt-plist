@@ -1,0 +1,5 @@
+# Get stuff from youtube
+curl "https://www.youtube.com/playlist?list=PLRBp0Fe2Gpgn8Y9qI-p0aTxVtw8onBSFj" >> request
+# Get links to youtube videos
+#cat request  | sed "s/\(watch?v=[a-zA-Z0-9]*\)/\n\1\n/g" | grep  "watch?v[=A-Za-z0-9]\{11\}" | sort | uniq >> .playlist
+cat request  | sed "s/\(watch?v=[a-zA-Z0-9_-]*\)/\n\1\n/g" | grep "watch?v" | sort -u | uniq > .playlist
