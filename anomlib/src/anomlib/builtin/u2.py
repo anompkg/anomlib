@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 # Fetch the page directly
 url = "https://www.youtube.com/playlist?list=PLRBp0Fe2Gpgn8Y9qI-p0aTxVtw8onBSFj"
+# url = "https://inv.nadeko.net/playlist?list=PLRBp0Fe2Gpgn8Y9qI-p0aTxVtw8onBSFj"
 html = requests.get(url).text
 
 # Parse the HTML with BeautifulSoup + lxml
