@@ -15,7 +15,7 @@ uv.mk:
 
 download-uv.mk:
 	# Download uv.mk
-	@wget 'https://codeberg.org/anom/transpkg/raw/branch/master/transpkg/uv.mk'
+	@wget 'https://codeberg.org/anom/anomlib/raw/branch/master/anomlib/uv.mk'
 
 # Optionally require uv.mk
 # If it is missing run `make` to download
