@@ -1,6 +1,6 @@
 [project]
 name = "anomlib"
-version = "0.2.1"
+version = "0.3.2"
 authors = [{ name = "🦌 Anom 🦌", email = "tfed@tutamail.com" }]
 description = "A small package with anom's libraries"
 readme = "README.md"
@@ -8,6 +8,7 @@ requires-python = ">=3.9"
 dependencies = [
     "bs4>=0.0.2",
     "lxml>=6.1.1",
+    "pytest>=8.4.2",
     "twine>=6.2.0",
 ]
 classifiers = [
