@@ -1,58 +1,23 @@
-version = $(shell uv version --short)
+# Include shared uv Makefile
 
-version:
-	echo version: $(version)
+# Dependencies
+deps = pytest twine
+# Working packages, including current project
+work = anomlib $(deps)
 
-default: install
-	# Installing anomlib by default
+default-command: uv.mk
+	# Make sure uv is installed.
 
-build: venv clean
-	# Build Anomlib Package
-	uv build
+.PHONY: uv.mk
+uv.mk:
+	# Require uv.mk Makefile
+	@[[ -f uv.mk ]] || make download-uv.mk
 
-venv:
-	# Making sure venv is created
-	@ [[ -d .venv ]] || uv venv
+download-uv.mk:
+	# Download uv.mk
+	@wget 'https://codeberg.org/anom/transpkg/raw/branch/master/transpkg/uv.mk'
 
-require-twine: build
-	# Install Twine
-	uv pip install --upgrade twine
-
-upload: require-twine
-	# Upload Packages
-	@uv run python3 -m twine upload dist/* --verbose
-
-clean:
-	# Cleaning build's cache artifacts...
-	@rm -r dist/ src/anomlib.egg-info ||:
-
-gc:
-	# Cleaning uv pre-built cache artifacts...
-	uv clean
-
-uninstall:
-	# Removing old versions
-	uv pip uninstall anomlib
-
-add:
-	# Installing your newly uploaded package using uv.
-	# Note: If you cant get fresher versions do `make gc'
-	uv pip install anomlib
-
-install: gc add
-reinstall: uninstall install
-upgrade: upload reinstall
-
-guide:
-	# learn how to pack with pip: https://packaging.python.org/en/latest/tutorials/packaging-projects
-
-
-## System
-system-require-twine:
-	# Globally Install Twine
-	python3 -m pip install --upgrade twine
-
-system-install: build
-	# Globally install your newly uploaded package using pip.
-	python3 -m pip install anomlib==$(version)
+# Optionally require uv.mk
+# If it is missing run `make` to download
+-include uv.mk
 
