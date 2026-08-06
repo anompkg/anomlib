@@ -25,7 +25,6 @@ install: build
 
 uninstall: venv
 	# Remove Requirements like Twine
-	./install pip uninstall
 	uv pip uninstall $(work)
 
 add: venv
