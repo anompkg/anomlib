@@ -56,7 +56,7 @@ self: venv
 
 readd: remove add
 reinstall: uninstall install
-upgrade: upload reinstall
+upgrade: readd upload reinstall
 
 
 tests:
