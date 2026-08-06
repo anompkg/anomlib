@@ -2,9 +2,10 @@ version = $(shell uv version --short)
 name = $(shell uv version | sed "s/ .*//")
 
 version:
-	echo version: $(version)
-	echo name: $(name)
-	echo foo: $(foo)
+	@echo version: $(version)
+	@echo name: $(name)
+	@echo deps: $(deps)
+	@echo workspace: $(work)
 
 default: install
 	# Installing anomlib by default
