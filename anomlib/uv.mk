@@ -1,6 +1,16 @@
 version = $(shell uv version --short)
 name = $(shell uv version | sed "s/ .*//")
 
+
+# Paths to pip
+# VS-code looks here
+PIP_GLOBAL = /home/neon/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/pip
+PIPX = pipx
+
+# Default pip
+PIP ?= uv pip
+
+
 version:
 	@echo version: $(version)
 	@echo name: $(name)
@@ -22,11 +32,11 @@ install: build
 	# Install Requirements like Twine
 	# Installing your newly uploaded package using uv.
 	# Note: If you cant get fresher versions do `make gc'
-	uv pip install --upgrade $(work)
+	$(PIP) install --upgrade $(work)
 
 uninstall: venv
 	# Remove Requirements like Twine
-	uv pip uninstall $(work)
+	$(PIP) uninstall $(work)
 
 add: venv
 	# Update Dependencies
