@@ -13,7 +13,7 @@ class ParamParser:
         return optparse.OptionParser(epilog=textwrap.dedent("""\
     This is a test command.
     
-    Report bugs to https://codeberg.org/tfed/4g/issues."""))
+    Report bugs to https://codeberg.org/tfed/anomlib/issues."""))
 
     def __init__(self, args=sys.argv[1:], commands={}):
         self.command = "help"
