@@ -37,7 +37,8 @@ def hash_file(input_file, hashTool="sha256"):
     hashTool supports hashlib's hash functions such as md5 or sha512. 
     """
     
-    if os.path.isdir(): return
+    # Make sure its a file
+    if os.path.isdir(input_file): return
     
     # input_file = input("Enter the name of the file: ")
     # Note: Open file as 'bytes' not 'str' when 'rb' used.
