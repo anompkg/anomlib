@@ -4,13 +4,13 @@ version = "0.3.3"
 authors = [{ name = "🦌 Anom 🦌", email = "tfed@tutamail.com" }]
 description = "A small package with anom's libraries"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 dependencies = [
     "bs4>=0.0.2",
     "lxml>=6.1.1",
     "numpy>=2.0.2",
-    "pytest>=8.4.2",
-    "twine>=6.2.0",
+    "pytest>=9.1.1",
+    "twine>=7.0.0",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
