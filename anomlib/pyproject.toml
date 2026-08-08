@@ -19,8 +19,8 @@ license = "GPL-3.0-or-later"
 license-files = ["LICEN[CS]E*"]
 
 [project.urls]
-Homepage = "https://github.com/pypa/sampleproject"
-Issues = "https://github.com/pypa/sampleproject/issues"
+Homepage = "https://codeberg.org/anom/anomlib"
+Issues = "https://codeberg.org/anom/anomlib/issues"
 
 [dependency-groups]
 dev = []
