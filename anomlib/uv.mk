@@ -2,20 +2,24 @@ version = $(shell uv version --short)
 name = $(shell uv version | sed "s/ .*//")
 
 
-# Paths to pip
+# Paths to pips to select from
 # VS-code looks here
-PIP_GLOBAL = /home/neon/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/pip
-PIPX = pipx
+pipg = /home/neon/.local/share/uv/python/cpython-3.12.13-linux-x86_64-gnu/bin/pip
+pipx = pipx
+pip = uv pip
 
 # Default pip
-PIP ?= uv pip
+PIP ?= pip
 
+# Select pip
+piper ?= $($(PIP))
 
 version:
 	@echo version: $(version)
 	@echo name: $(name)
 	@echo deps: $(deps)
 	@echo workspace: $(work)
+	@echo pip: $(piper)
 
 default: install
 	# Installing anomlib by default
@@ -32,11 +36,11 @@ install: build
 	# Install Requirements like Twine
 	# Installing your newly uploaded package using uv.
 	# Note: If you cant get fresher versions do `make gc'
-	$(PIP) install --upgrade $(work)
+	$(piper) install --upgrade $(work)
 
 uninstall: venv
 	# Remove Requirements like Twine
-	$(PIP) uninstall $(work)
+	$(piper) uninstall $(work)
 
 add: venv
 	# Update Dependencies
@@ -62,7 +66,7 @@ gc:
 	uv clean
 
 self: venv
-	uv pip install .
+	$(piper) install .
 
 readd: remove add
 reinstall: uninstall install
