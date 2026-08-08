@@ -7,22 +7,37 @@ import time
 from functools import reduce
 from operator import itemgetter
 
+import numpy as np
+
+np.set_printoptions(suppress=True, precision=30)  # For standard form
+
 
 def sortby(d, field='name', key=None, reverse=False):
     if not key:
-        key=itemgetter(field)
+        key = itemgetter(field)
     return sorted(d, key=key, reverse=reverse)
+
+
+def add(*args):
+    "Sum numbers and return as numpy"
+    return np.array(sum(*args))
+
 
 def sum_fields(d, field='name'):
     "Sum each field in listed dicts"
-    return reduce(lambda x, y: {field: x[field] + y[field]}, d)[field]
+    return reduce(lambda x, y: {field: add(x[field], y[field])}, d)[field]
 
-def speed_test(fns: list, *args, **kwargs) -> dict:
+
+def speed_test(fn, *cases) -> list:
     """Rank all similar functions by Speed"""
 
     results = []
 
-    for fn in fns:
+    for params in cases:
+        # Get arguments
+        args = params['args']
+        kwargs = params['kwargs']
+
         "Test function on time for specific case"
 
         # Prepare space for the results
@@ -38,35 +53,45 @@ def speed_test(fns: list, *args, **kwargs) -> dict:
         # Categorize results
         status["name"] = name
         status["result"] = result
-        status["speed"] = ended - started
+        status["speed"] = np.array(ended - started)
         results += [status]
 
     # Sort time by speed
     results = sortby(results, 'speed')
-    print(results)
+    print('sorted results: ', results)
 
     return results
 
-def data_usage_test(fns: list, *args, **kwargs) -> dict:
+
+def data_usage_test(fn, *cases):
     """Rank all similar functions by Data Usage"""
-    for fn in fns:
-        fn(*args, **kwargs)
+
 
 def speed_tests(fns: list, *cases):
     """Rank all similar functions by Speed in all cases"""
-    print(cases)
-    for params in cases:
-        print(params)
-        args = params['args']
-        kwargs = params['kwargs']
-        results = speed_test(fns, *args, **kwargs)
-        return sum_fields(results, 'speed')
+    results = {}
+    for fn in fns:
+        # Prepare space for the results
+        name = fn.__name__
+        if name not in results:
+            results[name] = {}
+            results[name]['speed'] = 0
+
+        # Get speed count
+        speed = results[name]['speed']
+
+        result = speed_test(fn, *cases)
+
+        # Update speed summary
+        speed += sum_fields(result, 'speed')
+
+        # Convert sum back to readable format
+        results[name]['speed'] = np.array(speed)
+
+    return results
+
 
 def data_usage_tests(fns: list, *cases) -> dict:
     """Rank all similar functions by Data Usage in all cases"""
-    for params in cases:
-        print(params)
-        args = params['args'], kwargs = params['kwargs']
-        data_usage_test(fns, *args, **kwargs)
-
-
+    for fn in fns:
+        data_usage_test(fn, *cases)
