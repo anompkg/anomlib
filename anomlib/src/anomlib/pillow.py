@@ -7,10 +7,16 @@ It allows you getting some items more safer ways avoiding (i. e. KeyErrors).
 Also it lets you avoid way too frequent updates by categorizing things into group and setting a update limits for them.
 """
 
-import hashlib, os, sys
+# import sys
+# from pathlib import Path
 
-from pathlib import Path
+import hashlib
+import logging
+import os
 from contextlib import suppress
+
+logger = logging.getLogger(__name__)
+logger.info("Anomlib")
 
 def mkdirs(path):
     if not os.path.exists(path):
@@ -20,14 +26,15 @@ def mkdirs_safely(dir):
     "Make sure that path to directory exists."
     try:
         os.makedirs(str(dir))
-    except:
-        pass
+    except Exception as _exc:
+        logger.exception("Exception occurred")
 
 def getKey(d, key="index"):
     "Get item from dictionary otherwise None"
-    with suppress(Exception): d[key]; return _
+    with suppress(Exception): return d[key]; return None
 
 def hashedString(s, hashTool="sha256"):
+    "Hash string"
     h = hashlib.new(hashTool)
     h.update(s.encode()) # give a encoded string. Makes the String to the Hash 
     return h.hexdigest() # Return the Hash

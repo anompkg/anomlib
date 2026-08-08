@@ -21,34 +21,30 @@ fi
 return "$?"
 """
 
-import logging
-import sys
-import textwrap
-import optparse
-# import os
-# import argparse
+# import optparse
 # import subprocess
-# import getopt
+# import textwrap
 # import argparse
-# import sys
+# import getopt
+# import logging
 
-#import anomtool.foGet
+import os
+import sys
+
 import anomlib.builtin.do
-#import anomtool.foGive
-import anomlib.params.anomtool
-from anomlib.paramparser import ParamParser
-import anomlib.pillow
 import anomlib.builtin.picload
+import anomlib.params.anomtool
+import anomlib.pillow
+from anomlib.paramparser import ParamParser
 
-
-## Forgy's sub-Commands
+## Fourgy's sub-Commands
 
 def anomtool_hash(p:ParamParser):
     "main function of anomtool-hash"
     name = p.options["all"]["source"]
     hashTool = p.options["all"]["hash"]
     for url in p.args["all"]:
-        print(anomlib.pillow.hashForgySource(url, name=name, hashTool=hashTool))
+        print(anomlib.pillow.hashFourgySource(url, name=name, hashTool=hashTool))
 
 
 
@@ -61,7 +57,7 @@ def anomtool_do(p:ParamParser):
         readline = p.options["all"]["readline"],
         prompt = p.options["all"]["prompt"],
         color = p.options["all"]["color"])
-import os
+
 def anomtool_picload(p:ParamParser):
     "main function for anomtool picload"
 
