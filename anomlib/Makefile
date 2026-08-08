@@ -1,9 +1,9 @@
 # Include shared uv Makefile
 
 # Dependencies
-deps = pytest twine
+deps ?= pytest twine
 # Working packages, including current project
-work = anomlib $(deps)
+work ?= anomlib $(deps)
 
 default-command: uv.mk
 	# Make sure uv is installed.

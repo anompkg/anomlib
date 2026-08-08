@@ -27,5 +27,47 @@ Issues = "https://codeberg.org/anom/anomlib/issues"
 dev = []
 fun = []
 
+# Pyrefly header
+[tool.pyrefly]
+
+#### configuring what to type check and where to import from
+project-includes = ["src"]
+project-excludes = ["**/.[!/.]*", "**/tests"]
+search-path = ["src"]
+site-package-path = [".venv/lib/python3.12/site-packages"]
+
+#### configuring your python environment
+python-platform = "linux"
+python-version = "3.12"
+python-interpreter-path = ".venv/bin/python3"
+
+#### configuring your type check settings
+replace-imports-with-any = [
+  "sympy.*",
+  "*.series",
+]
+
+ignore-errors-in-generated-code = true
+
+[tool.pyrefly.errors]
+bad-assignment = false
+invalid-argument = false
+
+[[tool.pyrefly.sub-config]]
+# apply this config to all files in `sub/project`
+matches = "sub/project/**"
+
+# enable `assert-type` errors in `sub/project`
+[tool.pyrefly.sub-config.errors]
+assert-type = true
+
+[[tool.pyrefly.sub-config]]
+# apply this config to all files in `sub`
+matches = "sub/**"
+
+# disable `assert-type` errors in `sub/project`
+[tool.pyrefly.sub-config.errors]
+assert-type = false
+
 [project.scripts]
 anomtool = "anomlib.commands.anomtool:main"
