@@ -1,7 +1,7 @@
 # Include shared uv Makefile
 
 # Dependencies
-deps ?= pytest twine
+deps ?= pytest twine $(pkgs)
 # Working packages, including current project
 work ?= anomlib $(deps)
 
