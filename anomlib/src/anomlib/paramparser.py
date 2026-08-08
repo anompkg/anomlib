@@ -5,6 +5,10 @@ import sys
 import textwrap
 import optparse
 
+def isNone(value):
+    "Check if value is None"
+    return isinstance(value, type(None))
+
 class ParamParser:
     """Wrapper around optparse.
     Hybrid Param Parser.
@@ -47,10 +51,13 @@ class ParamParser:
         self.init()
 
     def get_flag_safely(self, namespace, key):
-        try:
-            return self.options[namespace][key]
-        except():
+
+        # Return 0 if value does not exist
+        if namespace not in self.options or key not in self.options[namespace]:
             return 0
+
+        # Otherwise, Return flag counter
+        return self.options[namespace][key]
         
     def init(self):
         # Split arguments in master and command's areas 
@@ -63,57 +70,78 @@ class ParamParser:
         # Allow skipping areas while processing.
         self.args["all"] = self.args["master"] + self.args["command"]
         self.options["all"] = self.options["master"] | self.options["command"]
+        
+        # Debug
         print()
         print()
+
+        # Fix Global Flags Counter
+        self.fix_master_flags()
+        
+        # Debug
+        print("Arguments:")
+        for key in self.options["master"]:
+            print(f"{key} args: ")
+
+        print("Arguments:")
+        for key, value in self.args.items():
+            print(f"{key} args: ", value)
+
+        print("Options:")
+        for key, value in self.options.items():
+            print(f"{key} options: ", value)
+
+        print()
+
+    def fix_master_flags(self):
+
         # Fix global flag counters
-        for key in self.options["command"]:
-            print("master options: ", key, [i for i in self.options["master"]])
-            print("command options: ", key, [i for i in self.options["command"]])
+        for key, value in self.options["command"].items():
+
             if key in self.options["master"]:
+                # Debug
                 print(f'{key} is a common flag')
 
                 # quick aliases to the parser's configured options
                 global_options = self.commands["master"]["options"]
                 command_options = self.commands[self.command]["options"]
-                # for i in command_options:
-                #     print(i)
-                # Make sure that we deal with flags only
-                if key in global_options or key in command_options:
-                    print(f"{key} flag is an option")
-                    continue
-                print(f"{key} flag")
-                
                 # quick aliases to current parsed options
                 global_value = self.options["master"][key]
-                value = self.options["command"][key]
+                
+
+                # Make sure that we deal with "flag options" only (not "option options")
+                if key in global_options or key in command_options:
+                    print(f"{key} is not a flag but an option")
+                    # Skip if option
+                    continue
+
+                # Debug
+                print(f"{key} flag")
                 
                 # Clear count if -no or -non was used in command namespace
                 if False in [global_value, value]:
                     global_value = 0
                 
                 # Convert None and False values to 0 while getting counts of --verboses
-                values = [0 if isinstance(value, type(None)) else value for value in [global_value, value]]
+                values = [global_value, value]
+                # Reset value to 0 when None
+                values = [[value, 0][isNone(value)] for value in values]
+
+                # Debug
                 print(values)
+
                 # Update summarized result
                 result = sum(values)
+
+                # Apply merged count
                 self.options["command"][key] = result
                 self.options["master"][key] = result
                 self.options["all"][key] = result
 
-        print("Arguments:")
-        for key in self.options["master"]:
-            print(f"{key} args: ")
-        print("Arguments:")
-        for key, value in self.args.items():
-            print(f"{key} args: ", value)
-        print("Options:")
-        for key, value in self.options.items():
-            print(f"{key} options: ", value)
-        print()
-    
     def _splitArgsByKeyword(self, keyword):
         if keyword in self.args["original"]:
             self.command = keyword
+
             index = self.args["original"].index(keyword)
             # split arguments by command so we can parse before args and after args.
             # End params are linked to the command, when params before are more global.
@@ -175,7 +203,9 @@ class ParamParser:
     def parseArgs(self, command=None):
         if not command:
             command = self.command
-        namespace = "master" if command == "master" else "command"
+        
+        # Namespace is either command or master
+        namespace = ["command", "master"][command == "master"]
         
         if namespace == "command":
             assert self.options[namespace] == {}
