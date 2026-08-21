@@ -2,3 +2,5 @@
 
 uv version "$@"
 git tag "$@"
+gitui
+
