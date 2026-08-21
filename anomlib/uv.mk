@@ -27,7 +27,7 @@ version:
 default: install
 	# Installing anomlib by default
 
-build: add clean
+build: tests add clean
 	# Build Anomlib Package
 	uv build
 
@@ -76,10 +76,11 @@ reinstall: uninstall install
 upgrade: readd upload reinstall
 
 
+.PHONY: tests
 tests:
 	# Run PyTests
-	uv run pytest src/$(name)/tests
-#	uv run pytest
+	uv run pytest package
+	uv run pytest tests
 #	python -m unittest discover src/transpkg/tests
 #	# or
 #	#python -m unittest discover -s <directory> -p '*_test.py'
