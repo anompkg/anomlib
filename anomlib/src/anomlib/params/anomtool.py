@@ -23,7 +23,7 @@ commands = {
                 'kwargs': {
                     'help': 'Days before refresh.',
                     'default': -7,
-                    'type': int
+                    'type': 'int'
                 }
             },
             'hours': {
@@ -31,7 +31,7 @@ commands = {
                 'kwargs': {
                     'help': 'Hours before refresh.',
                     'default': +5,
-                    'type': int
+                    'type': 'int'
                 }
             }
         }
@@ -96,7 +96,7 @@ commands = {
                 'kwargs': {
                     'help': 'First Comic.',
                     'default': 1,
-                    'type': int
+                    'type': 'int'
                 }
             },
             'stop': {
@@ -104,7 +104,7 @@ commands = {
                 'kwargs': {
                     'help': 'Set Last Comic.',
                     'default': 1,
-                    'type': int
+                    'type': 'int'
                 }
             }
         },
