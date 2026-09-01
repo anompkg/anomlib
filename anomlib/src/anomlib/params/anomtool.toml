@@ -1,0 +1,189 @@
+# Each Command has 
+
+[hash]
+
+    [hash.hash]
+        ## [ParamParser]
+        class = "option"
+        # List of all short flags inside a string
+        shorts = "H"
+        keys = ["hasher"]
+
+        ## [Add_Option]
+        help = "Hasher in %(prog)s program"
+        default = "md5"
+        # Note basically all except shorts, key & keys are kwargs
+
+    [hash.source]
+        class = "flag"
+        shorts = "s"
+
+
+[pull]
+    [pull.days]
+        # Param Parser 
+        class = "option"
+        # List of all short flags inside a string
+        shorts = "D"
+
+        # Kwargs
+        help = "Days before refresh"
+        default = -7
+        type = "int"
+
+    [pull.hours]
+        class = "option"
+
+        # List of all short flags inside a string
+        shorts = "H"
+
+        [pull.hours.kwargs]
+            help = "Hours before refresh"
+            default = +5
+            type = "int"
+
+    [pull.source]
+        type = "flag"
+        shorts = "s"
+
+
+[do]
+    [do.options]
+
+    [do.options.color]
+        # List of all short flags inside a string
+        shorts = "c"
+
+        [do.options.color.kwargs]
+            help = "Set prompt's color"
+            default = "Yellow"
+
+    [do.options.prompt]
+        # List of all short flags inside a string
+        shorts = "p"
+
+        [do.options.prompt.kwargs]
+            help = "Set prompt"
+            default = "with "
+
+    [do.options.readline]
+        # List of all short flags inside a string
+        shorts = "ri"
+        keys = ["inputline"]
+
+        [do.options.readline.kwargs]
+            help = "Set readline tool"
+            default = "rlwrap"
+
+
+    [do.options.history]
+        # List of all short flags inside a string
+        shorts = "Hg"
+        keys = ["group"]
+
+        [do.options.history.kwargs]
+            help = "History file for %(prog)s program"
+            default = ""
+
+
+[picload]
+    [picload.options]
+
+    [picload.options.type]
+        # List of all short flags inside a string
+        shorts = "t"
+        keys = ["filetype"]
+
+        [picload.options.type.kwargs]
+            help = "Set picture's filetype"
+            default = "jpeg"
+
+    [picload.options.home]
+        # List of all short flags inside a string
+        shorts = "d"
+        keys = ["directory"]
+
+        [picload.options.home.kwargs]
+            help = "Change Working Directory"
+            default = "~/Pictures/gg"
+
+    [picload.options.ending]
+        # List of all short flags inside a string
+        shorts = "e"
+        keys = ["urlend"]
+
+        [picload.options.ending.kwargs]
+            help = "Set Url's ending"
+            default = ".jpg"
+
+    [picload.options.start]
+        # List of all short flags inside a string
+        shorts = "s"
+        keys = ["start"]
+
+        [picload.options.start.kwargs]
+            help = "Set First Comic"
+            default = 1
+            type = 'int'
+
+    [picload.options.stop]
+        # List of all short flags inside a string
+        shorts = "S"
+        keys = ["stop"]
+
+        [picload.options.stop.kwargs]
+            help = "Set Last Comic"
+            default = 1
+            type = 'int'
+
+
+# will be like '4g with' but for interactively working with '4g'.
+[repl]
+[help]
+[install]
+
+
+[master]
+    [master.options]
+
+    [master.options.output]
+        type = "option"
+        # List of all short flags inside a string
+        shorts = "o"
+
+        [master.options.output.kwargs]
+            help = "Write Output into a file"
+
+    [master.options.foo]
+        [master.options.foo.kwargs]
+            help = "foo of the %(prog)s program"
+
+    [master.flags]
+
+    [master.flags.verbose]
+        # List of all short flags inside a string
+        shorts = "o"
+
+        [master.options.verbose.kwargs]
+            help = "Write Output into a file"
+
+    [master.options.act]
+        [master.options.act.kwargs]
+            help = "foo of the %(prog)s program"
+
+
+    'master': {
+        'flags': {
+            'verbose': {
+                'args': ['-v'],
+                'kwargs': {'help': 'Verbose output.'}
+            },
+            'act': {
+                'args': ['-a'],
+                'kwargs': {'help': 'Test count.'},
+            }
+
+        }
+    }
+}
+
