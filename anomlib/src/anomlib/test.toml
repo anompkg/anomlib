@@ -1,0 +1,11 @@
+x = "y"
+
+[conf]
+version = "v0.0.1"
+website = "https://example.com"
+
+# TOML config file
+
+[Name]
+    en = "test.toml"
+    uk.toml = "that_test.toml"
