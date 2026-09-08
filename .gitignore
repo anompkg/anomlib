@@ -302,3 +302,7 @@ pkg/
 
 # ---> VScode
 *.vscode
+
+
+# Ignore lock files
+*.lock
