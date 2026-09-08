@@ -2,188 +2,169 @@
 
 [hash]
 
-    [hash.hash]
-        ## [ParamParser]
-        class = "option"
-        # List of all short flags inside a string
-        shorts = "H"
-        keys = ["hasher"]
+[hash.hash]
+    ## [ParamParser]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "H"
+    keys = ["hasher"]
 
-        ## [Add_Option]
-        help = "Hasher in %(prog)s program"
-        default = "md5"
-        # Note basically all except shorts, key & keys are kwargs
+    ## [Add_Option]
+    help = "Hasher in %(prog)s program"
+    default = "md5"
+    # Note basically all except shorts, class & keys are kwargs
 
-    [hash.source]
-        class = "flag"
-        shorts = "s"
+[hash.source]
+    class = "flag"
+    shorts = "s"
 
 
 [pull]
-    [pull.days]
-        # Param Parser 
-        class = "option"
-        # List of all short flags inside a string
-        shorts = "D"
 
-        # Kwargs
-        help = "Days before refresh"
-        default = -7
-        type = "int"
+[pull.days]
+    # Param Parser 
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "D"
 
-    [pull.hours]
-        class = "option"
+    # Kwargs
+    help = "Days before refresh"
+    default = -7
+    type = "int"
 
-        # List of all short flags inside a string
-        shorts = "H"
+[pull.hours]
+    class = "option"
 
-        [pull.hours.kwargs]
-            help = "Hours before refresh"
-            default = +5
-            type = "int"
+    # List of all short flags inside a string
+    shorts = "H"
 
-    [pull.source]
-        type = "flag"
-        shorts = "s"
+    help = "Hours before refresh"
+    default = +5
+    type = "int"
+
+[pull.source]
+    type = "flag"
+    shorts = "s"
 
 
 [do]
-    [do.options]
 
-    [do.options.color]
-        # List of all short flags inside a string
-        shorts = "c"
+[do.color]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "c"
 
-        [do.options.color.kwargs]
-            help = "Set prompt's color"
-            default = "Yellow"
+    help = "Set prompt's color"
+    default = "Yellow"
 
-    [do.options.prompt]
-        # List of all short flags inside a string
-        shorts = "p"
+[do.prompt]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "p"
 
-        [do.options.prompt.kwargs]
-            help = "Set prompt"
-            default = "with "
+    help = "Set prompt"
+    default = "with "
 
-    [do.options.readline]
-        # List of all short flags inside a string
-        shorts = "ri"
-        keys = ["inputline"]
+[do.readline]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "ri"
+    keys = ["inputline"]
 
-        [do.options.readline.kwargs]
-            help = "Set readline tool"
-            default = "rlwrap"
+    help = "Set readline tool"
+    default = "rlwrap"
 
+[do.history]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "Hg"
+    keys = ["group"]
 
-    [do.options.history]
-        # List of all short flags inside a string
-        shorts = "Hg"
-        keys = ["group"]
-
-        [do.options.history.kwargs]
-            help = "History file for %(prog)s program"
-            default = ""
+    help = "History file for %(prog)s program"
+    default = ""
 
 
 [picload]
-    [picload.options]
 
-    [picload.options.type]
-        # List of all short flags inside a string
-        shorts = "t"
-        keys = ["filetype"]
+[picload.type]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "t"
+    keys = ["filetype"]
 
-        [picload.options.type.kwargs]
-            help = "Set picture's filetype"
-            default = "jpeg"
+    help = "Set picture's filetype"
+    default = "jpeg"
 
-    [picload.options.home]
-        # List of all short flags inside a string
-        shorts = "d"
-        keys = ["directory"]
+[picload.home]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "d"
+    keys = ["directory"]
 
-        [picload.options.home.kwargs]
-            help = "Change Working Directory"
-            default = "~/Pictures/gg"
+    help = "Change Working Directory"
+    default = "~/Pictures/gg"
 
-    [picload.options.ending]
-        # List of all short flags inside a string
-        shorts = "e"
-        keys = ["urlend"]
+[picload.ending]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "e"
+    keys = ["urlend"]
 
-        [picload.options.ending.kwargs]
-            help = "Set Url's ending"
-            default = ".jpg"
+    help = "Set Url's ending"
+    default = ".jpg"
 
-    [picload.options.start]
-        # List of all short flags inside a string
-        shorts = "s"
-        keys = ["start"]
+[picload.start]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "s"
+    keys = ["start"]
 
-        [picload.options.start.kwargs]
-            help = "Set First Comic"
-            default = 1
-            type = 'int'
+    help = "Set First Comic"
+    default = 1
+    type = 'int'
 
-    [picload.options.stop]
-        # List of all short flags inside a string
-        shorts = "S"
-        keys = ["stop"]
+[picload.stop]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "S"
+    keys = ["stop"]
 
-        [picload.options.stop.kwargs]
-            help = "Set Last Comic"
-            default = 1
-            type = 'int'
-
-
-# will be like '4g with' but for interactively working with '4g'.
-[repl]
-[help]
-[install]
+    help = "Set Last Comic"
+    default = 1
+    type = 'int'
 
 
 [master]
-    [master.options]
 
-    [master.options.output]
-        type = "option"
-        # List of all short flags inside a string
-        shorts = "o"
+[master.output]
+    class = "option"
+    # List of all short flags inside a string
+    shorts = "o"
 
-        [master.options.output.kwargs]
-            help = "Write Output into a file"
+    help = "Write Output into a file"
 
-    [master.options.foo]
-        [master.options.foo.kwargs]
-            help = "foo of the %(prog)s program"
+[master.foo]
+    class = "option"
+    help = "foo of the %(prog)s program"
 
-    [master.flags]
+[master.verbose]
+    class = "flag"
+    # List of all short flags inside a string
+    shorts = "v"
 
-    [master.flags.verbose]
-        # List of all short flags inside a string
-        shorts = "o"
+    help = "Verbose output."
 
-        [master.options.verbose.kwargs]
-            help = "Write Output into a file"
-
-    [master.options.act]
-        [master.options.act.kwargs]
-            help = "foo of the %(prog)s program"
+[master.act]
+    class = "option"
+    shorts = "a"
+    help = "Test count"
 
 
-    'master': {
-        'flags': {
-            'verbose': {
-                'args': ['-v'],
-                'kwargs': {'help': 'Verbose output.'}
-            },
-            'act': {
-                'args': ['-a'],
-                'kwargs': {'help': 'Test count.'},
-            }
+[repl]
+# will be like '4g with' but for interactively working with '4g'.
 
-        }
-    }
-}
 
+[help]
+
+
+[install]
