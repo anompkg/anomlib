@@ -8,7 +8,7 @@ from collections.abc import Iterable
 
 import confman
 
-data = confman.Conflock("params/anomtool.toml").load()
+# DATA = confman.Conflock("params/anomtool.toml").load()
 
 
 def isNone(value):
@@ -49,14 +49,12 @@ def sum_flags(values: Iterable[int | None | bool]) -> int:
 class ParamParser:
     """Wrapper around optparse supports toml.
     Hybrid Param Parser.
-    """
-    def _new_parser(self):
-        return optparse.OptionParser(epilog=textwrap.dedent("""\
     This is a test command.
+    Report
+ bugs to https://codeberg.org/tfed/anomlib/issues.
+    """
 
-    Report bugs to https://codeberg.org/tfed/anomlib/issues."""))
-
-    def __init__(self, toml, args=sys.argv[1:]):
+    def __init__(self, toml="params/anomtool.toml", args=sys.argv[1:]):
         # Default sub-command
         self.command = "help"
 
@@ -262,10 +260,6 @@ class ParamParser:
         self.args[namespace] = urls
 
 
-from pprint import pprint
-
-import anomlib.params.anomtool
-
-p = ParamParser(commands=anomlib.params.anomtool.commands)
+p = ParamParser()
 
 print(p.command)
