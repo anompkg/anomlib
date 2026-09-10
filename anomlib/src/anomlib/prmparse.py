@@ -1,9 +1,10 @@
 "Arglib is a fork of paramparser but uses toml format and is more simplified"
 
 import logging
+import optparse
 import sys
 import textwrap
-import optparse
+from collections.abc import Iterable
 
 import confman
 
@@ -31,7 +32,21 @@ def interpret_cmd_draft(draft):
             print(interpret_arg_draft(param))
 
 
-class ArgParser:
+def check_negatives(values: Iterable[int | None | bool]) -> list[int | None | bool]:
+    values = list(values)
+
+    for index in range(len(values) - 1, -1, -1):
+        if values[index] is False:
+            return values[index + 1:]
+
+    return values
+
+
+def sum_flags(values: Iterable[int | None | bool]) -> int:
+    return sum(value or 0 for value in check_negatives(values))
+
+
+class ParamParser:
     """Wrapper around optparse supports toml.
     Hybrid Param Parser.
     """
@@ -85,7 +100,7 @@ class ArgParser:
         
     def init(self):
         # Split arguments in master and command's areas 
-        self.splitArgs()
+        self.split_args()
 
         # Parse args and options
         self.parseArgs("master")
@@ -131,38 +146,31 @@ class ArgParser:
                 command_options = self.commands[self.command]["options"]
                 # quick aliases to current parsed options
                 global_value = self.options["master"][key]
-                
 
                 # Make sure that we deal with "flag options" only (not "option options")
                 if key in global_options or key in command_options:
+
                     print(f"{key} is not a flag but an option")
+
                     # Skip if option
                     continue
 
                 # Debug
                 print(f"{key} flag")
-                
+
                 # Clear count if -no or -non was used in command namespace
-                if False in [global_value, value]:
-                    global_value = 0
-                
-                # Convert None and False values to 0 while getting counts of --verboses
                 values = [global_value, value]
-                # Reset value to 0 when None
-                values = [[value, 0][isNone(value)] for value in values]
+                total = sum_flags(values)
 
                 # Debug
                 print(values)
 
-                # Update summarized result
-                result = sum(values)
-
                 # Apply merged count
-                self.options["command"][key] = result
-                self.options["master"][key] = result
-                self.options["all"][key] = result
+                self.options["command"][key] = total
+                self.options["master"][key] = total
+                self.options["all"][key] = total
 
-    def _splitArgsByKeyword(self, keyword):
+    def _split_args_by(self, keyword):
         if keyword in self.args["original"]:
             self.command = keyword
 
@@ -174,11 +182,11 @@ class ArgParser:
             # Merge options, but command's options will be marked as command's sub
             # vars(parse(self._args[1]));    {command}.{option} * vars(parse(self._args[2]))
 
-    def splitArgs(self):
+    def split_args(self):
         # Usage: 4g <options> <command> <command.options> <args>
         for cmd in self.commands:
             if cmd in sys.argv[1:] and cmd != "master":
-                self._splitArgsByKeyword(cmd)
+                self._split_args_by(cmd)
                 break
         else:
             # Otherwise if there is no cmd inside we can just drop help msg
@@ -255,8 +263,9 @@ class ArgParser:
 
 
 from pprint import pprint
+
 import anomlib.params.anomtool
 
-p = ArgParser(commands=anomlib.params.anomtool.commands)
+p = ParamParser(commands=anomlib.params.anomtool.commands)
 
 print(p.command)
