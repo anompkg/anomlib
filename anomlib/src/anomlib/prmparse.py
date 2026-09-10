@@ -183,7 +183,7 @@ class ParamParser:
     def split_args(self):
         # Usage: 4g <options> <command> <command.options> <args>
         for cmd in self.commands:
-            if cmd in sys.argv[1:] and cmd != "master":
+            if cmd in self.args["original"] and cmd != "master":
                 self._split_args_by(cmd)
                 break
         else:
