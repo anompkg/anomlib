@@ -267,11 +267,15 @@ class ArgParser:
 
 def test_argparser(command, *args, **kwargs):
     parser = ArgParser(command, *args, **kwargs).build()
-    values = parser.parse_args()
 
+    # values = parser.parse_args(["1", "-s", "foo", "bye"])
+    # print(values)
+
+    values = parser.parse_args()
     print(values)
 
 
 if __name__ == "__main__":
     # test_argparser("diff")
-    test_argparser("do", drafts=DATA)
+    test_argparser("pull", drafts=DATA)
+    test_argparser("master", drafts=DATA)
