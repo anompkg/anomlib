@@ -70,21 +70,22 @@ class ParamParser:
             # Command's Options with Arguments
             'command': []
         }
-        
+
         # Namespaces with Options
         self.options = {
             'master': {},
             'command': {}
         }
 
-        self.commands = confman.Conflock(toml).load()
+        # Load all rules that describe how to parse args
+        self.drafts = confman.Conflock(toml).load()
 
         # Prepare master namespace
-        self.parsers = {'master': ArgParser("master", drafts=DATA)}
+        self.parsers = {'master': ArgParser("master", drafts=self.drafts)}
         # TODO: after finding out if sub command was used.
         #   if so we should make another parser for it.
         self.init()
-        
+
     def init(self):
         # Split arguments in master and command's areas 
         self.split_args()
@@ -92,32 +93,13 @@ class ParamParser:
         # Parse args and options
         self.parse_args("master")
         self.parse_args()
-        
+
         # Allow skipping areas while processing.
         self.args["all"] = self.args["master"] + self.args["command"]
         self.options["all"] = self.options["master"] | self.options["command"]
-        
-        # Debug
-        print()
-        print()
 
         # Fix Global Flags Counter
         self.fix_master_flags()
-        
-        # Debug
-        print("Arguments:")
-        for key in self.options["master"]:
-            print(f"{key} args: ")
-
-        print("Arguments:")
-        for key, value in self.args.items():
-            print(f"{key} args: ", value)
-
-        print("Options:")
-        for key, value in self.options.items():
-            print(f"{key} options: ", value)
-
-        print()
 
     def fix_master_flags(self):
 
@@ -125,32 +107,26 @@ class ParamParser:
         for key, value in self.options["command"].items():
 
             if key in self.options["master"]:
-                # Debug
-                print(f'{key} is a common flag')
+                # TODO: Cmds in drafts no longer have
+                #       params split by options and flags.
+                # TODO: Add get_global_options() and get_command_options()
 
                 # quick aliases to the parser's configured options
-                global_options = self.commands["master"]["options"]
-                command_options = self.commands[self.command]["options"]
+                global_options = self.drafts["master"]["options"]
+                command_options = self.drafts[self.command]["options"]
                 # quick aliases to current parsed options
                 global_value = self.options["master"][key]
 
                 # Make sure that we deal with "flag options" only (not "option options")
+                # NOTE: we need to work with params class "flag" only
                 if key in global_options or key in command_options:
 
-                    print(f"{key} is not a flag but an option")
-
-                    # Skip if option
+                    # SKIP: key is not a flag but an option
                     continue
-
-                # Debug
-                print(f"{key} flag")
 
                 # Clear count if -no or -non was used in command namespace
                 values = [global_value, value]
                 total = sum_flags(values)
-
-                # Debug
-                print(values)
 
                 # Apply merged count
                 self.options["command"][key] = total
@@ -171,7 +147,7 @@ class ParamParser:
 
     def split_args(self):
         # Usage: 4g <options> <command> <command.options> <args>
-        for cmd in self.commands:
+        for cmd in self.drafts:
             if cmd in self.args["original"] and cmd != "master":
                 self._split_args_by(cmd)
                 break
@@ -186,30 +162,33 @@ class ParamParser:
         # Namespace is either command or master
         namespace = "master" if command == "master" else "command"
 
-
         if namespace == "command":
             assert self.options[namespace] == {}
 
-        parser = self.parsers[command]
-        parser.prog = f"4g {command}"
+        if command not in self.parsers:
+            self.parsers[command] = ArgParser(command, drafts=self.drafts)
 
-        self.add_options(parser, command)
-        self.add_flags(parser, command)
+        parser = self.parsers[command]
+        parser.prog = f"anomtool {command}"
+
         match command:
             case "master":
-                # Only master's progname is an exception 
-                parser.prog = "4g"
-            case "help":
-                parser.print_help()
+                # Only master's progname is an exception
+                parser.prog = "anomtool"
+            # case "help":
+            #     parser.print_help()
+            # TODO: after switching to argparse, print_help not working
 
+        # Note: opts["args"] has the rest of arguments
+        opts = parser.parse_args(self.args[namespace])
+        args = opts.pop("args", [])
 
-        opts, urls = parser.parse_args(self.args[namespace])
-        opts = vars(opts)
-        
         self.options[namespace] |= opts
-        self.args[namespace] = urls
+        self.args[namespace] = args
 
 
 p = ParamParser()
 
 print(p.command)
+print(p.args)
+print(p.options)
