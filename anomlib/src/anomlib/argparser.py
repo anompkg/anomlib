@@ -276,6 +276,6 @@ def test_argparser(command, *args, **kwargs):
 
 
 if __name__ == "__main__":
-    # test_argparser("diff")
-    test_argparser("pull", drafts=DATA)
-    test_argparser("master", drafts=DATA)
+    test_argparser("diff")
+    # test_argparser("pull", drafts=DATA)
+    # test_argparser("master", drafts=DATA)

@@ -5,8 +5,10 @@ import optparse
 import sys
 import textwrap
 from collections.abc import Iterable
+from pprint import pprint
 
 import confman
+from argparser import ArgParser
 
 # DATA = confman.Conflock("params/anomtool.toml").load()
 
@@ -77,14 +79,10 @@ class ParamParser:
 
         self.commands = confman.Conflock(toml).load()
 
-        # Prepare Parsers for all commands (which is crazy)
-        # TODO: Dont init parsers that wont be used
-        # Global and Command Parsers
-        self.parsers = {'master': self._new_parser()}
-        # the rest of parsers        
-        for cmd in self.commands:
-            self.parsers[cmd] = self._new_parser()
-
+        # Prepare master namespace
+        self.parsers = {'master': ArgParser("master", drafts=DATA)}
+        # TODO: after finding out if sub command was used.
+        #   if so we should make another parser for it.
         self.init()
         
     def init(self):
@@ -182,55 +180,19 @@ class ParamParser:
             # And exit with help error
             sys.exit(2)
 
-    def add_flag(self, parser, dest, *args, **kwargs):
-        parser.add_option(f'--{dest}', *args, dest=dest, action='count', **kwargs)
-
-        # Support --no- with --non- key prefixes to set keys False
-        parser.add_option(f"--no-{dest}", dest=dest, action='store_false')
-        parser.add_option(f"--non-{dest}", dest=dest, action='store_false')
-
-    def add_flags(self, parser, command):
-        if "flags" not in self.commands[command]:
-            self.commands[command]["flags"] = {}
     def parse_args(self, command=None):
         command = command or self.command
 
-        flags = self.commands[command]["flags"]
         # Namespace is either command or master
         namespace = "master" if command == "master" else "command"
 
-        for dest, act in flags.items():
-            print(f'{command}: {dest}: {act}')
-            (args, kwargs) = act['args'], act['kwargs']
-            self.add_flag(parser, dest, *args, **kwargs)
-
-        ## Warning: Recursion:
-        # We want to allow global arguments into command namespace as well
-        if command != "master":
-            self.add_flags(parser, "master")
-
-    def add_options(self, parser, command):
-        if "options" not in self.commands[command]:
-            self.commands[command]["options"] = {}
-
-        options = self.commands[command]["options"]
-
-        for dest, opt in options.items():
-            print(f'{command}: {dest}: {opt}')
-            (args, kwargs) = opt['args'], opt['kwargs']
-            parser.add_option(f"--{dest}", *args, **kwargs)
-
-        ## Warning: Recursion:
-        # Allow master arguments working inside command's namespace
-        if command != "master":
-            self.add_options(parser, "master")
 
         if namespace == "command":
             assert self.options[namespace] == {}
 
         parser = self.parsers[command]
         parser.prog = f"4g {command}"
-        
+
         self.add_options(parser, command)
         self.add_flags(parser, command)
         match command:
