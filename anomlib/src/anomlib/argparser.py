@@ -58,6 +58,7 @@ class ArgParser:
             if parser is not None
             else argparse.ArgumentParser()
         )
+        self.build()
 
     def build(self):
         try:
@@ -266,7 +267,7 @@ class ArgParser:
 
 
 def test_argparser(command, *args, **kwargs):
-    parser = ArgParser(command, *args, **kwargs).build()
+    parser = ArgParser(command, *args, **kwargs)
 
     # values = parser.parse_args(["1", "-s", "foo", "bye"])
     # print(values)
