@@ -86,15 +86,6 @@ class ParamParser:
             self.parsers[cmd] = self._new_parser()
 
         self.init()
-
-    def get_flag_safely(self, namespace, key):
-
-        # Return 0 if value does not exist
-        if namespace not in self.options or key not in self.options[namespace]:
-            return 0
-
-        # Otherwise, Return flag counter
-        return self.options[namespace][key]
         
     def init(self):
         # Split arguments in master and command's areas 
