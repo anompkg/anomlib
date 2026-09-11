@@ -101,8 +101,8 @@ class ParamParser:
         self.split_args()
 
         # Parse args and options
-        self.parseArgs("master")
-        self.parseArgs()
+        self.parse_args("master")
+        self.parse_args()
         
         # Allow skipping areas while processing.
         self.args["all"] = self.args["master"] + self.args["command"]
@@ -201,8 +201,12 @@ class ParamParser:
     def add_flags(self, parser, command):
         if "flags" not in self.commands[command]:
             self.commands[command]["flags"] = {}
+    def parse_args(self, command=None):
+        command = command or self.command
 
         flags = self.commands[command]["flags"]
+        # Namespace is either command or master
+        namespace = "master" if command == "master" else "command"
 
         for dest, act in flags.items():
             print(f'{command}: {dest}: {act}')
@@ -230,13 +234,6 @@ class ParamParser:
         if command != "master":
             self.add_options(parser, "master")
 
-    def parseArgs(self, command=None):
-        if not command:
-            command = self.command
-        
-        # Namespace is either command or master
-        namespace = ["command", "master"][command == "master"]
-        
         if namespace == "command":
             assert self.options[namespace] == {}
 
