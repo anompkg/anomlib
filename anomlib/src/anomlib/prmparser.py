@@ -7,8 +7,8 @@ import textwrap
 from collections.abc import Iterable
 from pprint import pprint
 
-import confman
-from argparser import ArgParser
+from anomlib import confman
+from anomlib.argparser import ArgParser
 
 # DATA = confman.Conflock("params/anomtool.toml").load()
 
@@ -59,6 +59,7 @@ class ParamParser:
     def __init__(self, toml="params/anomtool.toml", args=sys.argv[1:]):
         # Default sub-command
         self.command = "help"
+        self.toml = toml
 
         # Raw Arguments
         self.args = {
@@ -78,7 +79,7 @@ class ParamParser:
         }
 
         # Load all rules that describe how to parse args
-        self.drafts = confman.Conflock(toml).load()
+        self.drafts = confman.Conflock(self.toml).load()
 
         # Prepare master namespace
         self.parsers = {'master': ArgParser("master", drafts=self.drafts)}
@@ -190,8 +191,8 @@ class ParamParser:
         self.args[namespace] = args
 
 
-p = ParamParser()
+# p = ParamParser()
 
-print(p.command)
-print(p.args)
-print(p.options)
+# print(p.command)
+# print(p.args)
+# print(p.options)

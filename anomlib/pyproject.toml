@@ -1,6 +1,6 @@
 [project]
 name = "anomlib"
-version = "0.3.3"
+version = "0.3.4"
 authors = [{ name = "🦌 Anom 🦌", email = "tfed@tutamail.com" }]
 description = "A small package with anom's libraries"
 readme = "README.md"
@@ -75,3 +75,13 @@ assert-type = false
 
 [project.scripts]
 anomtool = "anomlib.commands.anomtool:main"
+
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mypackage = ["data/*.toml", "data/*.json"]

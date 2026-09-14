@@ -4,8 +4,8 @@ requires-python = ">=3.12"
 
 [[package]]
 name = "anomlib"
-version = "0.3.3"
-source = { virtual = "." }
+version = "0.3.4"
+source = { editable = "." }
 dependencies = [
     { name = "bs4" },
     { name = "filelock" },

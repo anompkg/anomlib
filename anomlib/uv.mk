@@ -27,7 +27,9 @@ version:
 default: install
 	# Installing anomlib by default
 
-build: tests add clean
+buildtest: tests build
+
+build: add clean
 	# Build Anomlib Package
 	uv build
 

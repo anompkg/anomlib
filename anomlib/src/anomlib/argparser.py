@@ -7,9 +7,10 @@ Nested sub commands for arglib are not planned yet."""
 # I had paramparser that worked, but dont wanna play parsing anymore
 # I promise i will replace these vibes with blood, sweat and tears
 import argparse
-import confman
 
-DATA = confman.Conflock("params/anomtool.toml").load()
+import anomlib.confman
+
+# DATA = anomlib.confman.Conflock("params/anomtool.toml").load()
 
 
 # Compatibility with optparse-style type names.
@@ -65,6 +66,7 @@ class ArgParser:
             # Support all args
             self.params["args"] = ARGS
         except KeyError:
+            print(self.drafts)
             raise ValueError(
                 f"Unknown command: {self.command!r}"
             )
@@ -232,7 +234,7 @@ class ArgParser:
     def _convert_type(params):
         """
         Convert type names such as "string" and "int" into
-        callables accepted by argparse.
+        callables accepted by argparser.
         """
         value_type = params.get("type")
 
@@ -307,7 +309,7 @@ def test_argparser(command, *args, **kwargs):
     print(values)
 
 
-if __name__ == "__main__":
-    test_argparser("diff")
-    # test_argparser("pull", drafts=DATA)
-    # test_argparser("master", drafts=DATA)
+# if __name__ == "__main__":
+#     test_argparser("diff")
+#     # test_argparser("pull", drafts=DATA)
+#     # test_argparser("master", drafts=DATA)

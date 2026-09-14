@@ -33,32 +33,38 @@ import sys
 
 import anomlib.builtin.do
 import anomlib.builtin.picload
-import anomlib.params.anomtool
 import anomlib.pillow
-from anomlib.paramparser import ParamParser
+import anomlib.prmparser
+from anomlib.prmparser import ParamParser
 
-## Fourgy's sub-Commands
+CONF = "params/anomtool.toml"
+CONF = os.path.abspath(CONF)
+print(CONF)
 
-def anomtool_hash(p:ParamParser):
+# Fourgy's sub-Commands
+
+
+def anomtool_hash(p: ParamParser):
     "main function of anomtool-hash"
     name = p.options["all"]["source"]
     hashTool = p.options["all"]["hash"]
     for url in p.args["all"]:
-        print(anomlib.pillow.hashFourgySource(url, name=name, hashTool=hashTool))
+        print(anomlib.pillow.hashFourgySource(
+            url, name=name, hashTool=hashTool))
 
 
-
-def anomtool_do(p:ParamParser):
+def anomtool_do(p: ParamParser):
     "main function for 4g do"
 
     anomlib.builtin.do.do_repl(
-        args = p.args["all"],
-        history = p.options["all"]["history"],
-        readline = p.options["all"]["readline"],
-        prompt = p.options["all"]["prompt"],
-        color = p.options["all"]["color"])
+        args=p.args["all"],
+        history=p.options["all"]["history"],
+        readline=p.options["all"]["readline"],
+        prompt=p.options["all"]["prompt"],
+        color=p.options["all"]["color"])
 
-def anomtool_picload(p:ParamParser):
+
+def anomtool_picload(p: ParamParser):
     "main function for anomtool picload"
 
     start = p.options["all"]["start"]
@@ -68,23 +74,30 @@ def anomtool_picload(p:ParamParser):
     p.options["all"]["home"] = os.path.expanduser(p.options["all"]["home"])
     ggHome = p.options["all"]["home"]
     for url_begin in p.args["all"]:
-        anomlib.builtin.picload.getGallery(start, stop, url_begin, urlend, ggType=ggType, ggHome=ggHome)
+        anomlib.builtin.picload.getGallery(
+            start, stop, url_begin, urlend,
+            ggType=ggType, ggHome=ggHome,
+        )
         # # print(getGallery(1, 90, "file-", ".jpeg"))
 
 
-
 def main():
-    p = ParamParser(commands=anomlib.params.anomtool.commands)
+    "Main function of anomtool command"
+    print(sys.argv[1:])
+    print(CONF)
+    p = ParamParser(toml=CONF)
+    return 0
 
-    match p.command:
-        case "hash":
-            anomtool_hash(p)
-        case "picload":
-            anomtool_picload(p)
-        case "do":
-            anomtool_do(p)
-        # case "install":
-        #     anomtool.foGive.install()
+    # match p.command:
+    #     case "hash":
+    #         anomtool_hash(p)
+    #     case "picload":
+    #         anomtool_picload(p)
+    #     case "do":
+    #         anomtool_do(p)
+    #     # case "install":
+    #     #     anomtool.foGive.install()
+
 
 if __name__ == '__main__':
-	sys.exit(main())
+    sys.exit(main())
