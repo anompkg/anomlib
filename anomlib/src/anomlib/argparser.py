@@ -119,7 +119,7 @@ class ArgParser:
 
         positive_params = dict(params)
         positive_params.update({
-            "action": "store_true",
+            "action": "count",
             "dest": dest,
         })
 
