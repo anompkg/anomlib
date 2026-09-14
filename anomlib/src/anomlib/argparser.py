@@ -6,7 +6,6 @@ Nested sub commands for arglib are not planned yet."""
 # Note: This code was vibe-coded as i got bored
 # I had paramparser that worked, but dont wanna play parsing anymore
 # I promise i will replace these vibes with blood, sweat and tears
-
 import argparse
 import confman
 
@@ -49,7 +48,7 @@ DRAFTS = {
 
 
 class ArgParser:
-    ""
+    "ArgParser handles one sub command"
     def __init__(self, command, drafts=None, parser=None):
         self.command = command
         self.drafts = DRAFTS if drafts is None else drafts
@@ -62,15 +61,15 @@ class ArgParser:
 
     def build(self):
         try:
-            params = self.drafts[self.command]
+            self.params = self.drafts[self.command]
             # Support all args
-            params["args"] = ARGS
+            self.params["args"] = ARGS
         except KeyError:
             raise ValueError(
                 f"Unknown command: {self.command!r}"
             )
 
-        for name, config in params.items():
+        for name, config in self.params.items():
             self.add_option(name, config)
 
         return self
