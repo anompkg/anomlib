@@ -264,6 +264,38 @@ class ArgParser:
 
         return vars(namespace)
 
+    def merge_parser_arguments(self, source):
+        """Add arguments from source to target unless target already defines them."""
+
+        target_dests = {
+            action.dest
+            for action in self.parser._actions
+            if action.dest != "help"
+        }
+
+        target_options = {
+            option
+            for action in self.parser._actions
+            for option in action.option_strings
+        }
+
+        for action in source._actions:
+            if action.dest == "help":
+                continue
+
+            # A has redefined this argument
+            if action.dest in target_dests:
+                continue
+
+            # Avoid option-string collisions too
+            if any(option in target_options for option in action.option_strings):
+                continue
+
+            self.parser._add_action(action)
+
+            target_dests.add(action.dest)
+            target_options.update(action.option_strings)
+
 
 def test_argparser(command, *args, **kwargs):
     parser = ArgParser(command, *args, **kwargs)
