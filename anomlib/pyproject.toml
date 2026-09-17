@@ -1,6 +1,6 @@
 [project]
 name = "anomlib"
-version = "0.3.4"
+version = "0.3.6"
 authors = [{ name = "🦌 Anom 🦌", email = "tfed@tutamail.com" }]
 description = "A small package with anom's libraries"
 readme = "README.md"
@@ -84,4 +84,4 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.setuptools.package-data]
-mypackage = ["data/*.toml", "data/*.json"]
+mypackage = ["params/*.toml", "config/*.toml", "data/*.toml"]
