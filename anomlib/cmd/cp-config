@@ -9,8 +9,8 @@ import pathlib
 from pathlib import Path
 
 
-CONF = Path(__file__).parent / "configs"
-DEST = Path.home() / ".config/anomtool"
+CONF = Path(__file__).parent.parent / "src/anomlib/conf"
+DEST = Path.home() / ".config/anomlib"
 
 
 def mkdirs(path):

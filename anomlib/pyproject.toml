@@ -15,6 +15,7 @@ dependencies = [
     "toml>=0.10.2",
     "tomlkit>=0.15.1",
     "twine>=7.0.0",
+    "uv-build>=0.12.13",
 ]
 classifiers = [
   "Programming Language :: Python :: 3",
