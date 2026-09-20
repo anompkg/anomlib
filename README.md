@@ -38,9 +38,9 @@ and supports using `readline` input as a sub-command with arguments.
 - **Picload**:
 Organizes collections or albums of pictures from the internet,
 such as wallpaper sets.
-- **U2**:
-Parses YouTube-related data. Its future purpose is still undecided.
-- **W2v**:
+- **u2**:
+Parses YouTube-related data. Its future purpose is not decided yet.
+- **w2v** and **undub**:
 Removes duplicate lines from input.
 - **Whitespace**:
 Removes trailing whitespace from lines.
@@ -56,16 +56,20 @@ and Linux in general:
 
 - Finding commands by walking through `PATH`.
 - Listing Flatpak applications, selecting one through `dmenu`, and running it.
-- Working with file descriptor 3.
+- Working with file descriptor fd3.
 - Removing noise from media files using FFmpeg.
-- Making the backlight writable for window managers that require it.
+- Making the backlight writable for Window Managers that may require it.
 - Toggling warm screen lighting.
 - Other small utilities for command automation, system configuration, and media processing.
+
+Some scripts are primitive and some were lost in time and never got into git,
+but they served its purpose at certain point.
 
 ## Shared uv Makefile
 
 Anomlib provides a common `uv.mk` Makefile for use across my projects.
 The `uv.mk` file is maintained and updated here.
+It helps build/clean/update venv, push to/fetch from PyPI.
 
 Copy the `Makefile` into your project and modify it to suit that project’s requirements.
 Do not delete it, as it contains personal requirements shared across your projects.
@@ -93,4 +97,5 @@ Ifuse may be somewhat similar to `confuse`, although that was not intentional.
 The original goal was simply to create my first small framework.
 The framework has staged processing of input channels,
 while both original input and processed will remain accessible.
-Main idea is to merge all channels into one settings object.
+Main idea is to merge all channels into one settings object,
+and let all input sources simple to access and control over app.
