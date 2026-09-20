@@ -77,19 +77,19 @@ If your local `uv.mk` file is outdated, remove it and run the `Makefile` again
 You can also customize the `download-uv-mk` target
     to download `uv.mk` from a different URL.
 
-## Planned Framework (fuse-io)
+## Planned Framework (Ifuse)
 
-I plan to create my first small framework (FuseIO)
+I plan to create my first small framework (ifuse)
 by combining some of my shared libraries into a single entity.
 It will provide access to configuration files,
 environment variables, and command-line parameters.
 
-FuseIO may also support an interactive mode using `readline`.
+Ifuse may also support an interactive mode using `readline`.
 Optionally, it could provide an interactive background API service
 for controlling the application through API requests.
 We also may also allow binding some OS signals to events.
 
-Fuseio may be somewhat similar to `confuse`, although that was not intentional.
+Ifuse may be somewhat similar to `confuse`, although that was not intentional.
 The original goal was simply to create my first small framework.
 The framework has staged processing of input channels,
 while both original input and processed will remain accessible.
