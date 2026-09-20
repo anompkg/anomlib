@@ -3,6 +3,8 @@
 <h1 align="center">Welcome to Anomlib</h1>
 <!-- </div> -->
 
+## Introduction
+
 This project contains shared libraries that my key projects use:
 
 - **Shell command wrapper** — Executes shell commands from Python. Made transition easier from Bash to Python.
@@ -21,7 +23,7 @@ This project also includes older Bash scripts that are planned to be rewritten i
 - **U2** — Parses YouTube-related data. Its future purpose is still undecided.
 - **W2v** — Removes duplicate lines from input.
 - **Whitespace** — Removes trailing whitespace from lines.
-- **Gentoo utilities** — Includes older Gentoo-oriented scripts that can be sourced to simplify entering a freshly installed Gentoo system from a TTY using `chroot`.
+- **Chroot into Gentoo** — Some old Gentoo-oriented scripts that you source to simplify entering a freshly installed Gentoo System from the TTY using `chroot`.
 
 ## Utility Scripts
 
