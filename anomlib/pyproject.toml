@@ -85,4 +85,4 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.setuptools.package-data]
-mypackage = ["params/*.toml", "config/*.toml", "data/*.toml"]
+anomlib = ["params/*", "config/*", "data/*"]
