@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+"""
+Copy Default configs. Skip custom configs.
+"""
+
+from argparse import Namespace
 from __future__ import annotations
 
 import argparse
@@ -9,7 +14,15 @@ import pathlib
 from pathlib import Path
 
 
-CONF = Path(__file__).parent.parent / "src/anomlib/conf"
+# Note: you can take .. from directory via parent:
+# CONF = Path(__file__).parent.parent / "src/anomlib/conf"
+# It works different in case with ./README.md/.., or .parent with dirname()
+# Shell does not allow /.. after filename, but it would equivalent to dirname() 
+
+# Path to Configs inside git project
+CONF = Path(__file__) / "../../src/anomlib/conf"
+
+# Copy into ~/.config/anomlib/
 DEST = Path.home() / ".config/anomlib"
 
 
@@ -49,7 +62,8 @@ def install_configs(source_dir: Path, overwrite: bool, dry_run: bool) -> None:
         shutil.copy2(source_path, destination_path)
 
 
-def main() -> int:
+def parse_args():
+    "Parse "
     parser = argparse.ArgumentParser(
         description="Install configuration files into ~/.config"
     )
@@ -70,7 +84,14 @@ def main() -> int:
         help="Show what would happen without copying files",
     )
 
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def make_configs():
+    """Make sure configs exist.
+    Copy over default configs if there are no configs yet"""
+
+    args = parse_args()
 
     try:
         mkdirs(args.source.expanduser().resolve())
@@ -84,7 +105,3 @@ def main() -> int:
         return 1
 
     return 0
-
-
-if __name__ == "__main__":
-    raise sys.exit(main())
