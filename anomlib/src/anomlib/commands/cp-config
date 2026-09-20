@@ -1,0 +1,18 @@
+#!/usr/bin/env python3
+
+"""
+Copy Default configs. Skip custom configs.
+"""
+
+import sys
+
+# Note: we import directly within git project
+import src.anomlib.cpconf
+
+
+def main() -> int:
+    return src.anomlib.cpconf.make_configs()
+
+
+if __name__ == "__main__":
+    raise sys.exit(main())
