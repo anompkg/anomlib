@@ -3,7 +3,7 @@
 <h1 align="center">Welcome to Anomlib</h1>
 <!-- </div> -->
 
-This project contains shared libraries for my key projects:
+This project contains shared libraries that my key projects use:
 
 - **Shell command wrapper** — Executes shell commands from Python. Made transition easier from Bash to Python.
 - **Parameter parser** — Splits command-line arguments into logical areas. It currently supports tool and subcommand areas. An args-only area introduced by `--` is planned, and nested subcommands may be supported in the future. Parameters are defined within drafts in TOML configuration files.
