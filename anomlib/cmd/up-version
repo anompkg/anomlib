@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-uv version "$@"
-git tag "$@"
+UV_ARGS="${UV_ARGS-}"
+uv version "$1" "${UV_ARGS}"
 gitui
-
+git tag "$@"
