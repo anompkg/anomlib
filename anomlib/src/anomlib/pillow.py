@@ -48,17 +48,19 @@ def hash_file(input_file, hashTool="sha256"):
     """Hash file Fearlessly.
     hashTool supports hashlib's hash functions such as md5 or sha512. 
     """
-    
+
     # Make sure its a file
     if os.path.isdir(input_file): return
-    
+
     # input_file = input("Enter the name of the file: ")
     # Note: Open file as 'bytes' not 'str' when 'rb' used.
     # TODO: To encode 'str' into 'bytes' use "text".encode()
     with open(input_file, 'rb') as file:
         text = file.read()
         result = vars(hashlib)[hashTool](text).hexdigest()
-    # TODO: It may be "tempting" to return just one hash, but reusing read file object can speed up process.
+
+    # TODO: It may be "tempting" to return just one hash,
+    # but reusing read file object can speed up process.
     # return (md5_hash, sha1_hash, sha256_hash)
     return result
 
