@@ -18,9 +18,11 @@ from contextlib import suppress
 logger = logging.getLogger(__name__)
 logger.info("Anomlib")
 
+
 def mkdirs(path):
     if not os.path.exists(path):
         os.makedirs(str(path))
+
 
 def mkdirs_safely(dir):
     "Make sure that path to directory exists."
@@ -29,15 +31,18 @@ def mkdirs_safely(dir):
     except Exception as _exc:
         logger.exception("Exception occurred")
 
+
 def getKey(d, key="index"):
     "Get item from dictionary otherwise None"
     with suppress(Exception): return d[key]; return None
 
+
 def hashedString(s, hashTool="sha256"):
     "Hash string"
     h = hashlib.new(hashTool)
-    h.update(s.encode()) # give a encoded string. Makes the String to the Hash 
-    return h.hexdigest() # Return the Hash
+    h.update(s.encode())  # give a encoded string. Makes the String to the Hash 
+    return h.hexdigest()  # Return the Hash
+
 
 def hash_file(input_file, hashTool="sha256"):
     """Hash file Fearlessly.
@@ -57,18 +62,19 @@ def hash_file(input_file, hashTool="sha256"):
     # return (md5_hash, sha1_hash, sha256_hash)
     return result
 
+
 def hashValue(value, name=None, hashTool="md5"):
+    "Hash Value in 4g style"
     # Hash Value or value
     valueHash = hashedString(value, hashTool)
 
     # If name is None, False or Empty string: Just return hash
     if not name:
         return valueHash
-    
+
     # Get name from URL if name undefined
-    elif name == True:
+    elif name is True or isinstance(name, int):
         # Get Name while expecting that value is either URL or filepath.
         name = value.split("/")[-1]
 
     return f"{name}@{valueHash}"
-

@@ -37,9 +37,19 @@ import anomlib.pillow
 import anomlib.prmparser
 from anomlib.prmparser import ParamParser
 
+from importlib.resources import files
+
+
 CONF = "params/anomtool.toml"
-CONF = os.path.abspath(CONF)
-print(CONF)
+# CONF = os.path.abspath(CONF)
+# print(CONF)
+
+# Correct way - files is a function
+CONF = files('anomlib').joinpath(CONF)
+# config_text = config_files.read_text()
+# config = tomllib.loads(config_text)
+# print(config)
+
 
 # Fourgy's sub-Commands
 
@@ -49,7 +59,7 @@ def anomtool_hash(p: ParamParser):
     name = p.options["all"]["source"]
     hashTool = p.options["all"]["hash"]
     for url in p.args["all"]:
-        print(anomlib.pillow.hashFourgySource(
+        print(anomlib.pillow.hashValue(
             url, name=name, hashTool=hashTool))
 
 
@@ -86,17 +96,17 @@ def main():
     print(sys.argv[1:])
     print(CONF)
     p = ParamParser(toml=CONF)
-    return 0
+    # return 0
 
-    # match p.command:
-    #     case "hash":
-    #         anomtool_hash(p)
-    #     case "picload":
-    #         anomtool_picload(p)
-    #     case "do":
-    #         anomtool_do(p)
-    #     # case "install":
-    #     #     anomtool.foGive.install()
+    match p.command:
+        case "hash":
+            anomtool_hash(p)
+        case "picload":
+            anomtool_picload(p)
+        case "do":
+            anomtool_do(p)
+        # case "install":
+        #     anomtool.foGive.install()
 
 
 if __name__ == '__main__':

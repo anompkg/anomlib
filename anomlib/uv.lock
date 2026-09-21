@@ -9,6 +9,7 @@ source = { editable = "." }
 dependencies = [
     { name = "bs4" },
     { name = "filelock" },
+    { name = "files" },
     { name = "json5" },
     { name = "lxml" },
     { name = "numpy" },
@@ -23,6 +24,7 @@ dependencies = [
 requires-dist = [
     { name = "bs4", specifier = ">=0.0.2" },
     { name = "filelock", specifier = ">=3.32.5" },
+    { name = "files", specifier = ">=1.1.1" },
     { name = "json5", specifier = ">=0.15.0" },
     { name = "lxml", specifier = ">=6.1.1" },
     { name = "numpy", specifier = ">=2.0.2" },
@@ -309,6 +311,12 @@ sdist = { url = "https://files.pythonhosted.org/packages/0a/a0/50c2c0ce5e74d7721
 wheels = [
     { url = "https://files.pythonhosted.org/packages/36/d2/b70a31e13d04456d28493f31d2aa087e99eeb2767ef0293b2625727ccb8c/filelock-3.32.5-py3-none-any.whl", hash = "sha256:142cd9fa77a872c5e78c62329a0d15278fadc686eb89e760017968961a4fd6b2", size = 100003, upload-time = "2026-08-31T18:56:33.078Z" },
 ]
+
+[[package]]
+name = "files"
+version = "1.1.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/d3/b0/ddfcb3c51ad496bf665d80d3465d8c274592d70312558627c803107e7d7d/files-1.1.1.tar.gz", hash = "sha256:5688cf5b410b1ce85ca9ea3a7448e30766b989fe70600a2356f5765a941e3215", size = 10986, upload-time = "2009-08-27T00:03:15.726Z" }
 
 [[package]]
 name = "id"
