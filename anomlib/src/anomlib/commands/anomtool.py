@@ -37,8 +37,6 @@ import anomlib.pillow
 import anomlib.prmparser
 from anomlib.prmparser import ParamParser
 
-from importlib.resources import files
-
 
 CONF = "params/anomtool.toml"
 # CONF = os.path.abspath(CONF)
