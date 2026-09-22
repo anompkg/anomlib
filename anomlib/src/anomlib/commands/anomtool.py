@@ -44,13 +44,6 @@ CONF = "params/anomtool.toml"
 # CONF = os.path.abspath(CONF)
 # print(CONF)
 
-# Correct way - files is a function
-CONF = files('anomlib').joinpath(CONF)
-# config_text = config_files.read_text()
-# config = tomllib.loads(config_text)
-# print(config)
-
-
 # Fourgy's sub-Commands
 
 
@@ -95,7 +88,7 @@ def main():
     "Main function of anomtool command"
     print(sys.argv[1:])
     print(CONF)
-    p = ParamParser(toml=CONF)
+    p = ParamParser(pkg="anomlib", toml=CONF)
     # return 0
 
     match p.command:

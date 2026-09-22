@@ -10,6 +10,8 @@ from pprint import pprint
 from anomlib import confman
 from anomlib.argparser import ArgParser
 
+from importlib.resources import files
+
 # DATA = confman.Conflock("params/anomtool.toml").load()
 
 
@@ -56,10 +58,19 @@ class ParamParser:
  bugs to https://codeberg.org/tfed/anomlib/issues.
     """
 
-    def __init__(self, toml="params/anomtool.toml", args=sys.argv[1:]):
+    def __init__(self, toml="params/anomtool.toml",
+                 pkg="anomlib", args=sys.argv[1:]):
+        # Remember which pkg delivers built-in configs
+        # Select pkg as source of configs
+        self.pkg = pkg
         # Default sub-command
         self.command = "help"
         self.toml = toml
+        # Correct way - files is a function
+        self.toml = files(pkg).joinpath(toml)
+        # config_text = config_files.read_text()
+        # config = tomllib.loads(config_text)
+        # print(config)
 
         # Raw Arguments
         self.args = {
