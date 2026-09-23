@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+version="$1"
+shift
+
 gitui
 
 git commit -m "$@"
-git tag -m "$@"
+git tag $version -m "$@"

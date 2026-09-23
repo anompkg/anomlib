@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
 UV_ARGS="${UV_ARGS-}"
-
-uv_version="$1"
-shift
+version="$1"
 
 uv version "$uv_version" ${UV_ARGS}
 
-./tagcommit "$@"
+tagcommit "$@"
