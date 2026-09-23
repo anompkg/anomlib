@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+gitui
+
+git commit -m "$@"
+git tag -m "$@"
