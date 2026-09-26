@@ -7,6 +7,6 @@ mkdir -p "$UTUBE_HOME"
 cd "$UTUBE_HOME"
 
 # Install Video From YouTube with all Subtitles and Keep artifacts
-# "$UTUBE" --all-subs -- "$@"
-"$UTUBE" -- "$@"
+"$UTUBE" --all-subs -- "$@"
+# "$UTUBE" -- "$@"
 

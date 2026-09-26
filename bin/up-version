@@ -3,6 +3,6 @@
 UV_ARGS="${UV_ARGS-}"
 version="$1"
 
-uv version "$uv_version" ${UV_ARGS}
+uv version "$version" ${UV_ARGS}
 
 tagcommit "$@"
