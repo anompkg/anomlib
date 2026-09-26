@@ -7,7 +7,7 @@ Nested sub commands for arglib are not planned yet."""
 # I had paramparser that worked, but dont wanna play parsing anymore
 # I promise i will replace these vibes with blood, sweat and tears
 import argparse
-
+import tomlkit
 import anomlib.confman
 
 # DATA = anomlib.confman.Conflock("params/anomtool.toml").load()
@@ -19,7 +19,11 @@ TYPE_NAMES = {
     "int": int,
     "integer": int,
     "float": float,
+    "bool": bool,
 }
+
+FLAG_TYPES = (int, bool, float, list, tomlkit.items.Array)
+
 
 # Default structure to support arguments
 ARGS = {
@@ -87,6 +91,7 @@ class ArgParser:
             "arg"    Positional argument
         """
         params = dict(params)
+        # "value" is default class
         option_class = params.pop("class", "value")
 
         handler = getattr(
@@ -102,6 +107,24 @@ class ArgParser:
 
         return handler(name, params)
 
+    def validate_flag(self, name, kwargs):
+        declared_type = kwargs.get("type", "int")
+        expected_type = TYPE_NAMES.get(declared_type, declared_type)
+        default = kwargs.get("default", expected_type())
+
+        assert expected_type in FLAG_TYPES, (
+            f"{name}: flag type must be int or bool, "
+            f"got {declared_type!r}"
+        )
+
+        assert type(default) in FLAG_TYPES, (
+            f"{name}: type={declared_type!r} requires a "
+            f"{expected_type.__name__} default, "
+            f"got {type(default).__name__}"
+        )
+
+        print("OK")
+
     def add_flag(self, name, params):
         """
         Add a Boolean option and its negative aliases.
@@ -112,6 +135,9 @@ class ArgParser:
             --no-patch
             --non-patch
         """
+        
+        self.validate_flag(name, params)
+
         params = dict(params)
 
         shorts = params.pop("shorts", "")
