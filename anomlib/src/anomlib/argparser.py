@@ -76,11 +76,11 @@ class ArgParser:
             )
 
         for name, config in self.params.items():
-            self.add_option(name, config)
+            self.add_param(name, config)
 
         return self
 
-    def add_option(self, name, params):
+    def add_param(self, name, params):
         """
         Dispatch an option or positional argument to its handler.
 
@@ -107,7 +107,9 @@ class ArgParser:
 
         return handler(name, params)
 
-    def validate_flag(self, name, kwargs):
+    # TODO: make fix_flags to omit 'default' and 'type' instead
+    def _check_flag(self, name, kwargs):
+        """Check flag has no conflicting fields"""
         declared_type = kwargs.get("type", "int")
         expected_type = TYPE_NAMES.get(declared_type, declared_type)
         default = kwargs.get("default", expected_type())
@@ -135,8 +137,8 @@ class ArgParser:
             --no-patch
             --non-patch
         """
-        
-        self.validate_flag(name, params)
+
+        self._check_flag(name, params)
 
         params = dict(params)
 
@@ -150,7 +152,7 @@ class ArgParser:
             "dest": dest,
         })
 
-        self._add_option_argument(
+        self._add_option(
             name=name,
             shorts=shorts,
             keys=keys,
@@ -183,9 +185,13 @@ class ArgParser:
         shorts = params.pop("shorts", "")
         keys = params.pop("keys", [])
 
+        # TODO: Allow repeating options
+        params["action"] = "append"
+        params["default"] = []
+
         self._convert_type(params)
 
-        return self._add_option_argument(
+        return self._add_option(
             name=name,
             shorts=shorts,
             keys=keys,
@@ -222,7 +228,7 @@ class ArgParser:
 
         return self
 
-    def _add_option_argument(
+    def _add_option(
         self,
         name,
         shorts="",
