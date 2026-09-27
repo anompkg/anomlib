@@ -10,8 +10,6 @@ import argparse
 import tomlkit
 import anomlib.confman
 
-# DATA = anomlib.confman.Conflock("params/anomtool.toml").load()
-
 
 # Compatibility with optparse-style type names.
 TYPE_NAMES = {
@@ -324,7 +322,8 @@ def test_argparser(command, *args, **kwargs):
     print(values)
 
 
-# if __name__ == "__main__":
-#     test_argparser("diff")
-#     # test_argparser("pull", drafts=DATA)
-#     # test_argparser("master", drafts=DATA)
+if __name__ == "__main__":
+    test_argparser("diff")
+    # DATA = anomlib.confman.Conflock("params/anomtool.toml").load()
+    # test_argparser("pull", drafts=DATA)
+    # test_argparser("master", drafts=DATA)
