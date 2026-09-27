@@ -107,26 +107,6 @@ class ArgParser:
 
         return handler(name, params)
 
-    # TODO: make fix_flags to omit 'default' and 'type' instead
-    def _check_flag(self, name, kwargs):
-        """Check flag has no conflicting fields"""
-        declared_type = kwargs.get("type", "int")
-        expected_type = TYPE_NAMES.get(declared_type, declared_type)
-        default = kwargs.get("default", expected_type())
-
-        assert expected_type in FLAG_TYPES, (
-            f"{name}: flag type must be int or bool, "
-            f"got {declared_type!r}"
-        )
-
-        assert type(default) in FLAG_TYPES, (
-            f"{name}: type={declared_type!r} requires a "
-            f"{expected_type.__name__} default, "
-            f"got {type(default).__name__}"
-        )
-
-        print("OK")
-
     def add_flag(self, name, params):
         """
         Add a Boolean option and its negative aliases.
@@ -138,12 +118,15 @@ class ArgParser:
             --non-patch
         """
 
-        self._check_flag(name, params)
+        # FIx flags, they cant have values
+        params.pop("default", None)
+        params.pop("type", None)
 
         params = dict(params)
 
         shorts = params.pop("shorts", "")
         keys = params.pop("keys", [])
+
         dest = params.setdefault("dest", name)
 
         positive_params = dict(params)
