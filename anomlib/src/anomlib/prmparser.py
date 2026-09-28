@@ -210,7 +210,8 @@ class ParamParser:
         name: option name
         area: master|command|all
         default: should be the type that option uses"""
-        default = self.drafts[self.command]["length"].get("type", "string")
+        default = self.drafts[self.command][name].get("type", "string")
+
         default = argparser.TYPE_NAMES[default]()
 
         items = self.options[area][name]
