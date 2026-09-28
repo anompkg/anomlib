@@ -210,12 +210,22 @@ class ParamParser:
         name: option name
         area: master|command|all
         default: should be the type that option uses"""
-        default = self.drafts[self.command][name].get("type", "string")
 
+        # Get name of default type in option
+        default = self.drafts["master"][name].get("type", "string")
+        default = self.drafts[self.command][name].get("type", default)
+        # NOTE: We try to get default type from command area
+        #       or from master, otherwise return string
+
+        # Create empty/fresh default
         default = argparser.TYPE_NAMES[default]()
 
+        # Select specific option from all area
         items = self.options[area][name]
-        # Return last item or empty default
+        # TODO: Merge "all" area into "command"
+        # NOTE: "command" really posses all options
+
+        # Return last item or empty/fresh default
         return items[-1] if items else default
 
 
