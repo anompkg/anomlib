@@ -1,0 +1,45 @@
+#!/urs/bin/env bash
+
+# 
+
+ffmpeg -i input.mp4 -vn -c:a libmp3lame -b:a 192k output.mp3
+
+
+mp4_to_mp3() {
+    local input="$1"
+    local output="${2:-${input%.*}.mp3}"
+    local timestamp="${3:-00:00:01}"
+    local thumbnail
+
+    if [[ -z "$input" || ! -f "$input" ]]; then
+        echo "Usage: mp4_to_mp3 input.mp4 [output.mp3] [thumbnail-time]"
+        return 1
+    fi
+
+    thumbnail="$(mktemp --suffix=.jpg)" || return 1
+
+    trap 'rm -f "$thumbnail"' RETURN
+
+    # Extract one video frame for the thumbnail
+    ffmpeg -hide_banner -loglevel error -y \
+        -ss "$timestamp" \
+        -i "$input" \
+        -frames:v 1 \
+        -q:v 2 \
+        "$thumbnail" || return 1
+
+    # Extract audio and embed the thumbnail as MP3 cover art
+    ffmpeg -hide_banner \
+        -i "$input" \
+        -i "$thumbnail" \
+        -map 0:a:0 \
+        -map 1:v:0 \
+        -c:a libmp3lame \
+        -b:a 192k \
+        -c:v mjpeg \
+        -id3v2_version 3 \
+        -metadata:s:v title="Album cover" \
+        -metadata:s:v comment="Cover (Front)" \
+        -y "$output"
+}
+
