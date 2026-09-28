@@ -47,8 +47,8 @@ CONF = "params/anomtool.toml"
 
 def anomtool_hash(p: ParamParser):
     "main function of anomtool-hash"
-    name = p.options["all"]["source"]
-    hashTool = p.options["all"]["hash"]
+    name = p.last("source")
+    hashTool = p.last("hash")
     for url in p.args["all"]:
         print(anomlib.pillow.hashValue(
             url, name=name, hashTool=hashTool))
@@ -59,21 +59,21 @@ def anomtool_do(p: ParamParser):
 
     anomlib.builtin.do.do_repl(
         args=p.args["all"],
-        history=p.options["all"]["history"],
-        readline=p.options["all"]["readline"],
-        prompt=p.options["all"]["prompt"],
-        color=p.options["all"]["color"])
+        history=p.last("history"),
+        readline=p.last("readline"),
+        prompt=p.last("prompt"),
+        color=p.last("color"))
 
 
 def anomtool_picload(p: ParamParser):
     "main function for anomtool picload"
 
-    start = p.options["all"]["start"]
-    stop = p.options["all"]["stop"]
-    urlend = p.options["all"]["ending"]
-    ggType = p.options["all"]["type"]
-    p.options["all"]["home"] = os.path.expanduser(p.options["all"]["home"])
-    ggHome = p.options["all"]["home"]
+    start = p.last("start")
+    stop = p.last("stop")
+    urlend = p.last("ending")
+    ggType = p.last("type")
+    p.options["all"]["home"] = os.path.expanduser(p.last("home"))
+    ggHome = p.last("home")
     for url_begin in p.args["all"]:
         anomlib.builtin.picload.getGallery(
             start, stop, url_begin, urlend,
