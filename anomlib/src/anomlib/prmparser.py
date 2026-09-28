@@ -201,6 +201,18 @@ class ParamParser:
         self.options[namespace] |= opts
         self.args[namespace] = args
 
+    def last(self, name, area="all", default=""):
+        """Get last option or empty string.
+        ATM it returns empty string, but
+        later it will return object according to type.
+
+        name: option name
+        area: master|command|all
+        default: should be the type that option uses"""
+        items = self.options[area][name]
+        # Return last item or empty default
+        return items[-1] if items else default
+
 
 # p = ParamParser()
 
