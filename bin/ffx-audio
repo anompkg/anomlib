@@ -1,9 +1,12 @@
 #!/urs/bin/env bash
 
-# 
+get_mp3() {
+    local input="$1"
+    local output="${2:-${input%.*}.mp3}"
 
-ffmpeg -i input.mp4 -vn -c:a libmp3lame -b:a 192k output.mp3
-
+    # Extract audio from video
+    ffmpeg -i "$input" -vn -c:a libmp3lame -b:a 192k "$output"
+}
 
 mp4_to_mp3() {
     local input="$1"
@@ -11,11 +14,13 @@ mp4_to_mp3() {
     local timestamp="${3:-00:00:01}"
     local thumbnail
 
+    # Check input and output path
     if [[ -z "$input" || ! -f "$input" ]]; then
         echo "Usage: mp4_to_mp3 input.mp4 [output.mp3] [thumbnail-time]"
         return 1
     fi
 
+    # Get thumbnail
     thumbnail="$(mktemp --suffix=.jpg)" || return 1
 
     trap 'rm -f "$thumbnail"' RETURN
