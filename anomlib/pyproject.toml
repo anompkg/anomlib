@@ -1,6 +1,6 @@
 [project]
 name = "anomlib"
-version = "0.3.11"
+version = "0.3.12"
 authors = [{ name = "🦌 Anom 🦌", email = "tfed@tutamail.com" }]
 description = "A small package with anom's libraries"
 readme = "README.md"
