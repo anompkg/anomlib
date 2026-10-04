@@ -213,7 +213,7 @@ class ParamParser:
 
         # Get name of default type in option
         default = self.drafts["master"].get(name, {}).get("type", "string")
-        default = self.drafts[self.command][name].get("type", default)
+        default = self.drafts[self.command].get(name, {}).get("type", default)
         # NOTE: We try to get default type from command area
         #       or from master, otherwise return string
         print(f"{self.command}: {name}: type: {default}")
