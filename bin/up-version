@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 
-UV_ARGS="${UV_ARGS-}"
+# Print uv version when no args
+if (( $# == 0 )); then
+	printf "uv version: "
+	uv version
+	exit 2
+fi
+
+echo "args: $@"
+
+# Update uv version.
+# Sync git commits with tags.
+
+UV_ARGS="${UV_ARGS-}"  # tech args for `uv version'
 version="$1"
 
 uv version "$version" ${UV_ARGS}

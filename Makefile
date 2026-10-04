@@ -1,9 +1,13 @@
+default: install
+
 install:
-	@# Install commands in local directory
-	@cp -r bin/*[^~] $(HOME)/.local/bin/
+	# Install cmds at ~/.local/bin folder
+	@ cp -r bin/*[^~] $(HOME)/.local/bin/
+	# Done.
 
 
 sudo-install:
-	@# Install commands in the root /bin directory
-	@sudo cp bin/*[^~] /bin/
+	# Install cmds at /bin folder
+	@ sudo cp bin/*[^~] /bin/
+	# Done.
 
