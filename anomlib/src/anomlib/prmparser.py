@@ -149,6 +149,13 @@ class ParamParser:
                 self.options["master"][key] = total
                 self.options["all"][key] = total
 
+    def merge(self, keyword):
+        """Spread master args into command area.
+        Merge only global params that weren't redefined by command inside command area"""
+        ap = ArgParser(keyword, drafts=self.drafts)
+        ap.merge_parser_arguments(self.parsers["master"].parser)
+        self.parsers[keyword] = ap
+
     def check_args_keyword(self, keyword):
         "Extra check as args shouldn't extra keywords"
         count = self.args["original"].count(keyword)
@@ -164,8 +171,7 @@ class ParamParser:
             self.check_args_keyword(keyword)
             self.command = keyword
 
-            self.parsers[keyword] = ArgParser(keyword, drafts=self.drafts)
-            self.parsers[keyword].merge_parser_arguments(self.parsers["master"].parser)
+            self.merge(keyword)
 
             index = self.args["original"].index(keyword)
             # split arguments by command so we can parse before args and after args.
@@ -195,8 +201,7 @@ class ParamParser:
             assert self.options[namespace] == {}
 
         if command not in self.parsers:
-            self.parsers[command] = ArgParser(command, drafts=self.drafts)
-            self.parsers[command].merge_parser_arguments(self.parsers[command].parser)
+            self.merge(command)
 
         parser = self.parsers[command]
         parser.prog = f"anomtool {command}"
