@@ -1,5 +1,7 @@
 "Arglib is a fork of paramparser but uses toml format and is more simplified"
 
+from xml.dom import NotFoundErr
+from logging import raiseExceptions
 import logging
 import optparse
 import sys
@@ -14,6 +16,10 @@ from anomlib.argparser import ArgParser
 from importlib.resources import files
 
 # DATA = confman.Conflock("params/anomtool.toml").load()
+
+
+class KeywordOverflow(Exception):
+    "param parser allows only 1 keyword per args"
 
 
 def isNone(value):
@@ -143,9 +149,19 @@ class ParamParser:
                 self.options["master"][key] = total
                 self.options["all"][key] = total
 
+    def check_args_keyword(self, keyword):
+        "Extra check as args shouldn't extra keywords"
+        count = self.args["original"].count(keyword)
+
+        if count == 0:
+            return
+        if count != 1:
+            raise KeywordOverflow(f"{keyword}: found in args {count} times.")
+
     def _split_args_by(self, keyword):
         "Split args by command as keyword"
         if keyword in self.args["original"] and keyword != "master":
+            self.check_args_keyword(keyword)
             self.command = keyword
 
             self.parsers[keyword] = ArgParser(keyword, drafts=self.drafts)
@@ -167,9 +183,7 @@ class ParamParser:
                 self._split_args_by(cmd)
                 break
         else:
-            # Otherwise if there is no cmd inside we can just drop help msg
-            # And exit with help error
-            sys.exit(2)
+            raise ValueError("Sub command is required")
 
     def parse_args(self, command=None):
         command = command or self.command
@@ -217,6 +231,9 @@ class ParamParser:
         # NOTE: We try to get default type from command area
         #       or from master, otherwise return string
         print(f"{self.command}: {name}: type: {default}")
+
+        if default not in argparser.TYPE_NAMES:
+            raise NotFoundErr(f"We don't support {default} type.")
 
         # Create empty/fresh default
         default = argparser.TYPE_NAMES[default]()
