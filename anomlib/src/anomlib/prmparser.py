@@ -71,7 +71,7 @@ class ParamParser:
         # Select pkg as source of configs
         self.pkg = pkg
         # Default sub-command
-        self.command = "help"
+        self.command = "null"
         self.toml = toml
         # Correct way - files is a function
         self.toml = files(pkg).joinpath(toml)
