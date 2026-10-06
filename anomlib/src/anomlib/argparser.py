@@ -6,6 +6,7 @@ Nested sub commands for arglib are not planned yet."""
 # Note: This code was vibe-coded as i got bored
 # I had paramparser that worked, but dont wanna play parsing anymore
 # I promise i will replace these vibes with blood, sweat and tears
+import copy
 import argparse
 import tomlkit
 import anomlib.confman
@@ -48,6 +49,11 @@ DRAFTS = {
         }
     },
 }
+
+
+def copy_dict(values):
+    """Copy dict over to prevent mutations"""
+    return {k: copy.deepcopy(v) for k, v in values.items()}
 
 
 class ArgParser:
@@ -115,19 +121,18 @@ class ArgParser:
             --no-patch
             --non-patch
         """
+        raw_argument = copy_dict(params)
 
         # FIx flags, they cant have values
-        params.pop("default", None)
-        params.pop("type", None)
+        raw_argument.pop("default", None)
+        raw_argument.pop("type", None)
 
-        params = dict(params)
+        shorts = raw_argument.pop("shorts", "")
+        keys = raw_argument.pop("keys", [])
 
-        shorts = params.pop("shorts", "")
-        keys = params.pop("keys", [])
+        dest = raw_argument.setdefault("dest", name)
 
-        dest = params.setdefault("dest", name)
-
-        positive_params = dict(params)
+        positive_params = copy_dict(raw_argument)
         positive_params.update({
             "action": "count",
             "dest": dest,
