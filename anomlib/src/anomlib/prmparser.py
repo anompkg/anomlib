@@ -22,11 +22,6 @@ class KeywordOverflow(Exception):
     "param parser allows only 1 keyword per args"
 
 
-def isNone(value):
-    "Check if value is None"
-    return isinstance(value, type(None))
-
-
 def interpret_arg_draft(draft):
     shorts = list(draft.pop("shorts")) if "shorts" in draft else []
     keys = draft.pop("keys") if "keys" in draft else []
@@ -222,7 +217,7 @@ class ParamParser:
         self.args[namespace] = args
 
     def last(self, name, area="all"):
-        """Get last option or empty string.
+        """Get last option or empty object.
         ATM it returns empty string, but
         later it will return object according to type.
 
@@ -230,6 +225,7 @@ class ParamParser:
         area: master|command|all
         default: should be the type that option uses"""
 
+        # TODO:
         # Get name of default type in option
         default = self.drafts["master"].get(name, {}).get("type", "string")
         default = self.drafts[self.command].get(name, {}).get("type", default)
@@ -251,9 +247,8 @@ class ParamParser:
         # Return last item or empty/fresh default
         return items[-1] if items else default
 
+    def print(self):
+        print(self.command)
+        print(self.args)
+        print(self.options)
 
-# p = ParamParser()
-
-# print(p.command)
-# print(p.args)
-# print(p.options)
