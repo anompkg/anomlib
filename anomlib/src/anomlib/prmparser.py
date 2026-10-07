@@ -204,12 +204,12 @@ class ParamParser:
             self.merge(command)
 
         parser = self.parsers[command]
-        parser.prog = f"anomtool {command}"
+        parser.parser.prog = f"anomtool {command}"
 
         match command:
             case "master":
                 # Only master's progname is an exception
-                parser.prog = "anomtool"
+                parser.parser.prog = "anomtool"
             # case "help":
             #     parser.print_help()
             # TODO: after switching to argparse, print_help not working atm
