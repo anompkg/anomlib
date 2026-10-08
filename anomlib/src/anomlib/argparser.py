@@ -6,6 +6,7 @@ Nested sub commands for arglib are not planned yet."""
 # Note: This code was vibe-coded as i got bored
 # I had paramparser that worked, but dont wanna play parsing anymore
 # I promise i will replace these vibes with blood, sweat and tears
+from types import NoneType
 import copy
 import argparse
 import tomlkit
@@ -52,6 +53,10 @@ DRAFTS = {
 
 from collections.abc import Mapping
 from tomlkit.items import Item
+
+
+def isNone(value):
+    return isinstance(value, NoneType)
 
 
 def to_python(value):
