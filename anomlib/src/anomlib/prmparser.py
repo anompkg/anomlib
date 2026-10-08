@@ -17,6 +17,8 @@ from importlib.resources import files
 
 # DATA = confman.Conflock("params/anomtool.toml").load()
 
+_MISSING = object()
+
 
 class KeywordOverflow(Exception):
     "param parser allows only 1 keyword per args"
@@ -252,3 +254,26 @@ class ParamParser:
         print(self.command)
         print(self.args)
         print(self.options)
+
+    def last(self, name, area="all", default=_MISSING):
+        """Return the final parsed value for an option."""
+
+        master_draft = self.drafts["master"].get(name, {})
+        command_draft = self.drafts[self.command].get(name, {})
+        draft = {**master_draft, **command_draft}
+
+        values = self.options.get(area, {})
+
+        if name in values:
+            value = values[name]
+
+            if isinstance(value, list):
+                if value:
+                    return value[-1]
+            elif value is not None:
+                return value
+
+        if default is not _MISSING:
+            return default
+
+        return draft.get("default")
