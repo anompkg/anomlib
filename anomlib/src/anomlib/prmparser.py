@@ -92,7 +92,8 @@ class ParamParser:
         }
 
         # Load all rules that describe how to parse args
-        self.drafts = confman.Conflock(self.toml).load()
+        self.drafts = argparser.to_python(confman.Conflock(self.toml).load())
+        # Note: we recursively convert toml objects into python obj
 
         # Prepare master namespace
         self.parsers = {'master': ArgParser("master", drafts=self.drafts)}
@@ -251,4 +252,3 @@ class ParamParser:
         print(self.command)
         print(self.args)
         print(self.options)
-

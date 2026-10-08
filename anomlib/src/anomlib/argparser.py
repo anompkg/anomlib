@@ -50,6 +50,23 @@ DRAFTS = {
     },
 }
 
+from collections.abc import Mapping
+from tomlkit.items import Item
+
+
+def to_python(value):
+    "Turn TOML into python dict"
+    if isinstance(value, Mapping):
+        return {key: to_python(val) for key, val in value.items()}
+
+    if isinstance(value, (list, tuple)):
+        return [to_python(item) for item in value]
+
+    if isinstance(value, Item):
+        return to_python(value.unwrap())
+
+    return value
+
 
 def copy_dict(values):
     """Copy dict over to prevent mutations"""
@@ -60,7 +77,10 @@ class ArgParser:
     "ArgParser handles one sub command"
     def __init__(self, command, drafts=None, parser=None):
         self.command = command
-        self.drafts = DRAFTS if drafts is None else drafts
+
+        self.drafts = to_python(DRAFTS if drafts is None else drafts)
+        # Note: we recursively convert toml objects into python obj
+
         self.parser = (
             parser
             if parser is not None
