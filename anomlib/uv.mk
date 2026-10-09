@@ -81,8 +81,8 @@ upgrade: readd upload reinstall
 .PHONY: tests
 tests:
 	# Run PyTests
-	uv run pytest package
-	uv run pytest tests
+	uv run pytest -rxa package
+	uv run pytest -rxa tests
 #	python -m unittest discover src/transpkg/tests
 #	# or
 #	#python -m unittest discover -s <directory> -p '*_test.py'
