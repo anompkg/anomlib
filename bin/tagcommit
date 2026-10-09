@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
+# Get version from args
 version="$1"
 shift
 
+# Stage everything
+git -A
+
+# Check if everything is under control
 gitui
 
+# Commit and tag new version
 git commit -m "$@"
 git tag $version -m "$@"
