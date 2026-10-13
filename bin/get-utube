@@ -7,6 +7,8 @@ mkdir -p "$UTUBE_HOME"
 cd "$UTUBE_HOME"
 
 # Install Video From YouTube with all Subtitles and Keep artifacts
-"$UTUBE" --all-subs -- "$@"
-# "$UTUBE" -- "$@"
+# "$UTUBE" --all-subs -- "$@"
+#"$UTUBE" --write-subs --write-auto-subs --sub-langs "ro,en" --sub-format vtt --skip-download "$@"
+#"$UTUBE" --write-subs --write-auto-subs --sub-format vtt "$@"
+"$UTUBE" -- "$@"
 
