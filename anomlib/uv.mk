@@ -58,7 +58,7 @@ remove: venv
 
 upload: install
 	# Upload Packages
-	@uv run python3 -m twine upload dist/* --verbose
+	uv run twine upload dist/* --verbose
 
 clean: gc
 	# Cleaning build's cache artifacts...
