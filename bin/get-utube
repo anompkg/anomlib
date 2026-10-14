@@ -37,7 +37,7 @@ exec "$UTUBE" \
   --write-subs \
   --write-auto-subs \
   --convert-subs srt \
-  --socket-timeout 15 \
+  --socket-timeout 10 \
   --retries 2 \
   --extractor-retries 2 \
-  -- "$@"
+  "$@"
