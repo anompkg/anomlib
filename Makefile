@@ -1,4 +1,4 @@
-default: install
+default: check
 
 .PHONY: check diff install default sudo-install 
 
@@ -15,7 +15,7 @@ sudo-install:
 
 check:
 	# Compare if cmds were changed
-	# If so run `make' to update them
+	# If so run `make install' to update them
 	@set -eu; \
 	for src in bin/*; do \
 		[ -f "$$src" ] || continue; \

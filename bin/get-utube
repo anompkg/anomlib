@@ -1,14 +1,43 @@
 #!/bin/sh
 
-UTUBE="${UTUBE-yt-dlp}"
-UTUBE_HOME="${UTUBE_HOME-$HOME/Videos/yt}"
+UTUBE="${UTUBE:-yt-dlp}"
+UTUBE_SUBS="${UTUBE_SUBS:-en.*,cs.*,uk.*,ru.*}"
+UTUBE_HOME="${UTUBE_HOME:-$HOME/Videos/yt}"
+SUBS="${SUBS:-selected}"
 
-mkdir -p "$UTUBE_HOME"
-cd "$UTUBE_HOME"
+# commons
+err={err:-2}
 
-# Install Video From YouTube with all Subtitles and Keep artifacts
-# "$UTUBE" --all-subs -- "$@"
-#"$UTUBE" --write-subs --write-auto-subs --sub-langs "ro,en" --sub-format vtt --skip-download "$@"
-#"$UTUBE" --write-subs --write-auto-subs --sub-format vtt "$@"
-"$UTUBE" -- "$@"
+scream() {
+    printf "%s\n" "$*" >&2
+    return $err
+}
 
+die() {
+    printf "FATAL: %s\n" "$*" >&2
+    exit $err
+}
+
+case "$SUBS" in
+  selected)
+    set -- --sub-langs "$UTUBE_SUBS" "$@"
+    ;;
+  all)
+    set -- --sub-langs all "$@"
+    ;;
+  *)
+    die "SUBS must be 'selected' or 'all' not: $SUBS"
+    ;;
+esac
+
+mkdir -p "$UTUBE_HOME" || exit 1
+cd "$UTUBE_HOME" || exit 1
+
+exec "$UTUBE" \
+  --write-subs \
+  --write-auto-subs \
+  --convert-subs srt \
+  --socket-timeout 15 \
+  --retries 2 \
+  --extractor-retries 2 \
+  -- "$@"
