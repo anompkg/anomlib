@@ -1,4 +1,33 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+IFS=',' read -r -a keys <<< "$KEYS"
+
+# Handle special cases
+for key in "${keys[@]}"; do
+  case "$key" in
+    nodl)
+        set -- --skip-download "$@"
+        ;;
+    selected)
+        set -- --sub-langs "$UTUBE_SUBS" "$@"
+        ;;
+    all)
+        set -- --sub-langs all "$@"
+        ;;
+    *)
+        echo "Unknown key: $key"
+        # die "SUBS must be 'selected' or 'all' not: $SUBS"
+        ;;
+  esac
+done
+
+keys=(x y z)
+
+if [[ -n ${KEYS:-} ]]; then
+  IFS=',' read -r -a extra_keys <<< "$KEYS"
+  keys+=("${extra_keys[@]}")
+fi
+
 
 UTUBE="${UTUBE:-yt-dlp}"
 UTUBE_SUBS="${UTUBE_SUBS:-en.*,cs.*,uk.*,ru.*}"
