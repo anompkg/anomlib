@@ -69,7 +69,7 @@ def getGallery(start, stop, url_begin="file_", urlend=".jpg",
 
     print(requests)
     for request in requests:
-        print(f"curl '{request}' -o 'local2-#1.{ggType}'")
+        print(f"curl '{request}' -o 'local-#1.{ggType}'")
         anomlib.shell.runcmd(f"curl {request} -o 'local-#1.{ggType}'")
 
 

@@ -8,6 +8,7 @@ for key in "${keys[@]}"; do
     b) args+=(--beta) ;;
     c) args+=(--charlie) ;;
     d) args+=(--delta) ;;
+    *) echo "Unknown key: $key" >&2 ;;
   esac
 done
 

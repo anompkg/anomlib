@@ -72,8 +72,8 @@ def anomtool_picload(p: ParamParser):
     stop = p.last("stop")
     urlend = p.last("ending")
     ggType = p.last("type")
-    p.options["all"]["home"] = os.path.expanduser(p.last("home"))
     ggHome = p.last("home")
+    ggHome = os.path.expanduser(ggHome)
     for url_begin in p.args["all"]:
         anomlib.builtin.picload.getGallery(
             start, stop, url_begin, urlend,
