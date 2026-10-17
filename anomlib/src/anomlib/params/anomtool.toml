@@ -93,7 +93,7 @@
     keys = ["filetype"]
 
     help = "Set picture's filetype"
-    default = "jpeg"
+    default = "jpg"
 
 [picload.home]
     class = "value"
@@ -116,7 +116,7 @@
 [picload.start]
     class = "value"
     # List of all short flags inside a string
-    shorts = "s"
+    shorts = "sa"
     keys = ["start"]
 
     help = "Set First Comic"
@@ -126,8 +126,8 @@
 [picload.stop]
     class = "value"
     # List of all short flags inside a string
-    shorts = "S"
-    keys = ["stop"]
+    shorts = "Scb"
+    keys = ["count"]
 
     help = "Set Last Comic"
     default = 1
