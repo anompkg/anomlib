@@ -10,21 +10,30 @@ ggType = "jpeg"
 anomlib.pillow.mkdirs(str(ggHome))
 
 
-
 def num_to_index(start, stop, end, url_begin="", urlend=""):
-    fixture = len(str(end)) - len(str(start))
+    "Return a curl (ranged) url"
+    all_digits = len(str(end))
+    digits = len(str(start))
+
+    leading_zeros = all_digits - digits
+
+    # Lil check
+    _digits = len(str(stop))
+    assert _digits == digits, "Number of Digits has to match"
+
     # Fix url_begin if the number's power is weak
-    url_begin += '0' * fixture
+    url_begin += '0' * leading_zeros
     request = f'{url_begin}[{start}-{stop}]{urlend}'
     return request
 
 
 def get_range(numbers, fixture):
     fixture -= len(str(numbers[0])) - 1
-    patch = '0' * fixture
+    # patch = '0' * fixture
     start = numbers[0]
     stop = numbers[-1]
     return start, stop
+
 
 def get_ranges(start, stop):
     stop += 1
