@@ -1,27 +1,14 @@
 #!/usr/bin/env bash
 
-IFS=',' read -r -a keys <<< "$KEYS"
+UTUBE="${UTUBE:-yt-dlp}"
+SUBS="${SUBS:-en.*,cs.*,uk.*,ru.*}"
+UTUBE_HOME="${UTUBE_HOME:-$HOME/Videos/yt}"
+KEYS="${KEYS:-list}"
 
-# Handle special cases
-for key in "${keys[@]}"; do
-  case "$key" in
-    nodl)
-        set -- --skip-download "$@"
-        ;;
-    selected)
-        set -- --sub-langs "$UTUBE_SUBS" "$@"
-        ;;
-    all)
-        set -- --sub-langs all "$@"
-        ;;
-    *)
-        echo "Unknown key: $key"
-        # die "SUBS must be 'selected' or 'all' not: $SUBS"
-        ;;
-  esac
-done
+# common Errors
+err={err:-2}
 
-keys=(x y z)
+keys=(srt auto-subs z)
 
 if [[ -n ${KEYS:-} ]]; then
   IFS=',' read -r -a extra_keys <<< "$KEYS"
@@ -29,43 +16,53 @@ if [[ -n ${KEYS:-} ]]; then
 fi
 
 
-UTUBE="${UTUBE:-yt-dlp}"
-UTUBE_SUBS="${UTUBE_SUBS:-en.*,cs.*,uk.*,ru.*}"
-UTUBE_HOME="${UTUBE_HOME:-$HOME/Videos/yt}"
-SUBS="${SUBS:-selected}"
-
-# commons
-err={err:-2}
-
 scream() {
-    printf "%s\n" "$*" >&2
+    echo "FATAL: $@" >&2
+    echo "exit code: $err" >&2
     return $err
 }
 
 die() {
-    printf "FATAL: %s\n" "$*" >&2
-    exit $err
+  scream "$@"
+  exit $err
 }
 
-case "$SUBS" in
-  selected)
-    set -- --sub-langs "$UTUBE_SUBS" "$@"
-    ;;
-  all)
-    set -- --sub-langs all "$@"
-    ;;
-  *)
-    die "SUBS must be 'selected' or 'all' not: $SUBS"
-    ;;
-esac
+
+# Handle special cases
+for key in "${keys[@]}"; do
+  case "$key" in
+    no-dl)
+        set -- --skip-download "$@"
+        ;;
+    list)
+        set -- --sub-langs "$SUBS" "$@"
+        ;;
+    all)
+        set -- --sub-langs all "$@"
+        ;;
+    auto-subs)
+        set -- --write-subs --write-auto-subs "$@"
+        ;;
+    srt)
+        set -- --convert-subs srt "$@"
+        ;;
+    *)
+        scream "Unknown key: '$key' in $KEYS"
+        scream "args where we left off: $@"
+        die
+        ;;
+  esac
+done
+
+echo "KEYS: $KEYS"
+echo "args: $@"
+echo "sh args: $BASH_ARGV"
+echo "sh args: $BASH_ARGV0"
 
 mkdir -p "$UTUBE_HOME" || exit 1
 cd "$UTUBE_HOME" || exit 1
 
 exec "$UTUBE" \
-  --write-subs \
-  --write-auto-subs \
-  --convert-subs srt \
   --socket-timeout 10 \
   --retries 2 \
   --extractor-retries 2 \
