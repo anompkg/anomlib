@@ -162,3 +162,19 @@ def dl_diffs(_old, patch) -> list[str]:
     """
     return difflib.restore(patch, 2)
     # Note: patch contains all info needed to restore both versions
+
+
+a = "https://site.com/images/item-00001.png?size=large"
+b = "https://site.com/images/item-00156.png?size=large"
+
+
+def compare(a, b, cmp=dmp_diff):
+    return cmp(a.split("/"), b.split("/"))
+
+
+result = compare(a, b, cmp=dl_diff)
+
+print(result)
+
+c = [i for i in result if i.startswith(("-", "+"))]
+assert len(c) == 2, "We don't support URLs with multiple changes"
