@@ -22,6 +22,10 @@ import diff_match_patch
 import anomlib.pillow
 import anomlib.shell
 
+import difflib
+import shlex
+
+
 # import transpkg.diffTools
 
 # Diff Status Codes
@@ -183,3 +187,38 @@ def check_urlrange(a=URL1, b=URL2):
 
     # We don't support URLs with multiple changes
     return c if len(c) == 2 else ["", ""]
+
+
+def curl_glob_url(url_a: str, url_b: str) -> str:
+    opcodes = difflib.SequenceMatcher(
+        a=url_a, b=url_b, autojunk=False
+    ).get_opcodes()
+
+    changed = [op for op in opcodes if op[0] != "equal"]
+    if not changed:
+        raise ValueError("URLs are identical")
+
+    # Include any equal opcodes between the first and last difference.
+    _, a_start, _, b_start, _ = changed[0]
+    _, _, a_end, _, b_end = changed[-1]
+
+    part_a = url_a[a_start:a_end]
+    part_b = url_b[b_start:b_end]
+
+    if not part_a.isdigit() or not part_b.isdigit():
+        raise ValueError("The differing section must be numeric")
+
+    width = max(len(part_a), len(part_b))
+    start, stop = sorted((part_a.zfill(width), part_b.zfill(width)))
+
+    # The unchanged prefix/suffix must match for a valid single-range URL.
+    if url_a[:a_start] != url_b[:b_start] or url_a[a_end:] != url_b[b_end:]:
+        raise ValueError("URLs differ outside the numeric section")
+
+    glob_url = url_a[:a_start] + f"[{start}-{stop}]" + url_a[a_end:]
+    return "curl " + shlex.quote(glob_url)
+
+
+url = curl_glob_url(URL1, URL2)
+# print("curl", shlex.quote(url))
+print(url)
