@@ -164,14 +164,13 @@ def dl_diffs(_old, patch) -> list[str]:
     # Note: patch contains all info needed to restore both versions
 
 
-a = "https://site.com/images/item-00001.png?size=large"
-b = "https://site.com/images/item-00156.png?size=large"
-
-
 def compare(a, b, cmp=dmp_diff):
+    ""
     return cmp(a.split("/"), b.split("/"))
 
 
+URL1 = "https://site.com/images/item-00001.png?size=large"
+URL2 = "https://site.com/images/item-00156.png?size=large"
 
 
 def check_urlrange(a=URL1, b=URL2):
