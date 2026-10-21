@@ -172,9 +172,15 @@ def compare(a, b, cmp=dmp_diff):
     return cmp(a.split("/"), b.split("/"))
 
 
-result = compare(a, b, cmp=dl_diff)
 
-print(result)
 
-c = [i for i in result if i.startswith(("-", "+"))]
-assert len(c) == 2, "We don't support URLs with multiple changes"
+def check_urlrange(a=URL1, b=URL2):
+    "Check if A and B urls are compatible"
+    result = compare(a, b, cmp=dl_diff)
+
+    print(result)
+
+    c = [i for i in result if i.startswith(("-", "+"))]
+
+    # We don't support URLs with multiple changes
+    return c if len(c) == 2 else ["", ""]
