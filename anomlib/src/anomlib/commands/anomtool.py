@@ -82,6 +82,19 @@ def anomtool_picload(p: ParamParser):
         # # print(getGallery(1, 90, "file-", ".jpeg"))
 
 
+def anomtool_img(p: ParamParser):
+    "main function for anomtool picload"
+
+    # url = p.last("url")
+    ggHome = p.last("home")
+    ggHome = os.path.expanduser(ggHome)
+
+    # anomlib.compare.getGallery(
+    #     urls=p.args["all"],
+    #     ggHome=ggHome,
+    # )
+
+
 def main():
     "Main function of anomtool command"
     print(sys.argv[1:])
@@ -94,6 +107,8 @@ def main():
             anomtool_hash(p)
         case "picload":
             anomtool_picload(p)
+        case "img":
+            anomtool_img(p)
         case "do":
             anomtool_do(p)
         # case "install":

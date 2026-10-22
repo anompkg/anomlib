@@ -134,6 +134,27 @@
     type = 'int'
 
 
+[img]
+
+[img.url]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "u"
+    keys = ["urls"]
+
+    help = "Set picture's filetype"
+    default = []
+
+[img.home]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "d"
+    keys = ["directory"]
+
+    help = "Change Working Directory"
+    default = "~/Pictures/gg"
+
+
 [master]
 
 [master.output]
