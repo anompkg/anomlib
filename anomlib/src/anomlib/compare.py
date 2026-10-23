@@ -168,13 +168,24 @@ def dl_diffs(_old, patch) -> list[str]:
     # Note: patch contains all info needed to restore both versions
 
 
-def compare(a, b, cmp=dmp_diff):
-    ""
-    return cmp(a.split("/"), b.split("/"))
+from urllib.parse import urlsplit
 
 
-URL1 = "https://site.com/images/item-00001.png?size=large"
-URL2 = "https://site.com/images/item-00156.png?size=large"
+def split_url(url="https://example.com/users/42?name=Alex&active=true"):
+    parts = urlsplit(url)
+    chunks = [
+        parts.scheme,
+        parts.netloc,
+        *filter(None, parts.path.split("/")),
+        *filter(None, parts.query.split("&")),
+    ]
+
+    return chunks
+
+
+def compare_urls(a, b, cmp=dmp_diff):
+    "Compare urls by chunks"
+    return cmp(split_url(a), split_url(b))
 
 
 def check_urlrange(a=URL1, b=URL2):
