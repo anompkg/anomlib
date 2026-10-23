@@ -1,15 +1,15 @@
+import re
 from difflib import SequenceMatcher
 
 import anomlib.compare
-
-import re
 
 url1 = "https://example.com/00001.png"
 url2 = "https://example.com/00156.png"
 
 # Concentrate only on changed parts in URLs
 # Note we redefine urls, by omitting unchanged parts
-urls = anomlib.compare.check_urlrange(url1, url2)
+urls = anomlib.compare.curl_range_compatible(url1, url2)
+urls = anomlib.compare.compare(url1, url2)
 url1 = urls[0]
 url2 = urls[1]
 
