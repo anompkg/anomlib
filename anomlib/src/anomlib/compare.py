@@ -240,10 +240,50 @@ def curl_glob_url(url_a: str, url_b: str) -> str:
     if url_a[:a_start] != url_b[:b_start] or url_a[a_end:] != url_b[b_end:]:
         raise ValueError("URLs differ outside the numeric section")
 
-    glob_url = url_a[:a_start] + f"[{start}-{stop}]" + url_a[a_end:]
-    return "curl " + shlex.quote(glob_url)
+    return url_a[:a_start] + f"[{start}-{stop}]" + url_a[a_end:]
 
 
-url = curl_glob_url(URL1, URL2)
-# print("curl", shlex.quote(url))
-print(url)
+import shlex
+from urllib.parse import urlsplit
+from pathlib import PurePosixPath
+
+
+import re
+
+
+
+def get_curl(curl_requests) -> str:
+    args = ["curl", "--fail", "--location"]
+
+    for url_a, url_b in curl_requests:
+        url = curl_glob_url(url_a, url_b)
+        filename = PurePosixPath(urlsplit(url).path).name
+        print(filename)
+        output = re.sub(r"\[.*\]", "#1", filename)
+        print(output)
+
+        args.extend(["-o", output, url])
+
+    return " ".join(shlex.quote(arg) for arg in args)
+
+
+requests = [
+    (
+        "https://site.com/images/item-00100.png?size=large",
+        "https://site.com/images/item-00156.png?size=large",
+    ),
+    (
+        "https://site.com/images/item-00001.png?size=large",
+        "https://site.com/images/item-00055.png?size=large",
+    ),
+]
+
+
+URL1 = "https://site.com/images/item-00001.png?size=large"
+URL2 = "https://site.com/images/item-00156.png?size=large"
+
+if __name__ == "__main__":
+    print(get_curl(requests))
+    # url = curl_glob_url(URL1, URL2)
+    # # print("curl", shlex.quote(url))
+    # print(url)
