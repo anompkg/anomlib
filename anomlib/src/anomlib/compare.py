@@ -14,6 +14,7 @@
 # import sys
 # import tarfile
 # import time
+from glob import escape
 import difflib
 import diff_match_patch
 # import difflib
@@ -188,19 +189,32 @@ def compare_urls(a, b, cmp=dmp_diff):
     return cmp(split_url(a), split_url(b))
 
 
-def check_urlrange(a=URL1, b=URL2):
+def is_amend_digit(s, amends=("-", "+")):
+    try:
+        return s.startswith(amends) and s[1:].isdigit()
+    except ValueError:
+        return False
+
+
+def curl_range_compatible(a: str, b: str):
     "Check if A and B urls are compatible"
-    result = compare(a, b, cmp=dl_diff)
+    result = compare_urls(a, b, cmp=dmp_diff)
 
     print(result)
 
-    c = [i for i in result if i.startswith(("-", "+"))]
+    c = [i for i in result if is_amend_digit(i)]
 
+    # URLRange only supports changes once
     # We don't support URLs with multiple changes
-    return c if len(c) == 2 else ["", ""]
+    return len(c) == 2
 
 
 def curl_glob_url(url_a: str, url_b: str) -> str:
+    if not curl_range_compatible(url_a, url_b):
+        raise ValueError(
+            "Digit Amends must appear only once",
+            compare_urls(url_a, url_b))
+
     opcodes = difflib.SequenceMatcher(
         a=url_a, b=url_b, autojunk=False
     ).get_opcodes()
