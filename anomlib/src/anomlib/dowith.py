@@ -1,4 +1,3 @@
-import atexit
 import readline
 from pathlib import Path
 
@@ -12,17 +11,19 @@ def repl(hist="myapp.history"):
     except FileNotFoundError:
         pass
 
-    # Save the history when the program exits.
-    atexit.register(readline.write_history_file, history_file)
+    try:
+        while True:
+            try:
+                line = input(">>> ")
+            except (EOFError, KeyboardInterrupt):
+                return
 
-    while True:
-        try:
-            line = input(">>> ")
-        except (EOFError, KeyboardInterrupt):
-            print()
-            break
+            yield line
+    finally:
+        readline.write_history_file(history_file)
 
-        if line.strip() in {"exit", "quit"}:
-            break
 
-        print(f"You entered: {line}")
+for line in repl():
+    if line.strip() in {"exit", "quit"}:
+        break
+    print(f"You entered: {line}")
