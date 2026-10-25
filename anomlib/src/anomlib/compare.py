@@ -251,9 +251,9 @@ from pathlib import PurePosixPath
 import re
 
 
-
 def get_curl(curl_requests) -> str:
-    args = ["curl", "--fail", "--location"]
+    "Get url in curl globing format to download range of imgs."
+    args = ["curl"]
 
     for url_a, url_b in curl_requests:
         url = curl_glob_url(url_a, url_b)

@@ -36,8 +36,8 @@ that are planned to be rewritten in Python over time.
 Runs command-line arguments in a loop
 and supports using `readline` input as a sub-command with arguments.
 - **Picload**:
-Organizes collections or albums of pictures from the internet,
-such as wallpaper sets.
+Downloads collections or albums of pictures from the internet,
+such as wallpaper sets and comics.
 - **u2**:
 Parses YouTube-related data. Its future purpose is not decided yet.
 - **w2v** and **undub**:
