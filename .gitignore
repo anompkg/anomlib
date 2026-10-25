@@ -306,3 +306,8 @@ pkg/
 
 # Ignore lock files
 *.lock
+
+
+# Ignore history files
+*hist
+*history
