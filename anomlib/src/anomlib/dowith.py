@@ -2,9 +2,16 @@
 
 import readline
 from pathlib import Path
+from rich.prompt import Prompt
+
+
+class Input(Prompt):
+    "Input with prompt support"
+    prompt_suffix = ""
+
 
 # Mark ANSI color codes as non-printing so readline counts the prompt correctly.
-PROMPT = "\001\033[36m\002>>>\001\033[0m\002 "
+PROMPT = "[cyan]>>> [/cyan]"
 
 
 def repl(hist="myapp.history"):
@@ -21,7 +28,7 @@ def repl(hist="myapp.history"):
     try:
         while True:
             try:
-                yield input(PROMPT)
+                yield Input.ask(PROMPT)
             except (EOFError, KeyboardInterrupt):
                 return
     finally:

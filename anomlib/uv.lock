@@ -4,7 +4,7 @@ requires-python = ">=3.12"
 
 [[package]]
 name = "anomlib"
-version = "0.3.14"
+version = "0.3.15"
 source = { editable = "." }
 dependencies = [
     { name = "bs4" },
@@ -14,6 +14,7 @@ dependencies = [
     { name = "lxml" },
     { name = "numpy" },
     { name = "pytest" },
+    { name = "rich" },
     { name = "toml" },
     { name = "tomlkit" },
     { name = "twine" },
@@ -29,6 +30,7 @@ requires-dist = [
     { name = "lxml", specifier = ">=6.1.1" },
     { name = "numpy", specifier = ">=2.0.2" },
     { name = "pytest", specifier = ">=9.1.1" },
+    { name = "rich", specifier = ">=15.0.0" },
     { name = "toml", specifier = ">=0.10.2" },
     { name = "tomlkit", specifier = ">=0.15.1" },
     { name = "twine", specifier = ">=7.0.0" },
