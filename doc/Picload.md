@@ -33,4 +33,26 @@ Result: `https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Peppe
 
 # Imgload in work
 
-At the moment imgload automates some processes, meanwhile, commands may seem bigger at beginning.
+At the moment imgload automates some processes, meanwhile, commands may seem bigger at beginning of development.
+
+How it works now? Let's compare it with process of downloading same comic:
+
+`img https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Pepper-and-Carrot_by-David-Revoy_E39P01.jpg' 'https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Pepper-and-Carrot_by-David-Revoy_E39P12.jpg'`
+
+By providing 2 links, it will compare them and find out that they differ with range 01-12, thus return:
+
+`https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Pepper-and-Carrot_by-David-Revoy_E39P[01-12].jpg`
+
+`Note`: Also, there is shorter and faster way of doing this. Even tho at this moment next commands will raise an error as both links got 4 numbers `(0, 39, 39, 01)` and `(0, 39, 39, 12)`. It will be adjusted soon!
+
+Just use one link of last `12th` comic, and it should work right away if link has only 1 number:
+
+`img 'https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Pepper-and-Carrot_by-David-Revoy_E39P12.jpg'`
+
+It would return expected result, but since it got `4 numbers`, you will soon be able to specify which number is the `page` number, in our case it is `4th` (`--page=4`), the last number with `12` value:
+
+`img 'https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Pepper-and-Carrot_by-David-Revoy_E39P12.jpg' -p4`
+
+And voilà, behold:
+
+`https://www.peppercarrot.com/0_sources/ep39_The-Tavern/low-res/en_Pepper-and-Carrot_by-David-Revoy_E39P[01-12].jpg`
