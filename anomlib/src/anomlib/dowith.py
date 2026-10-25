@@ -1,5 +1,10 @@
+"Pseudo-interactive interpreter"
+
 import readline
 from pathlib import Path
+
+# Mark ANSI color codes as non-printing so readline counts the prompt correctly.
+PROMPT = "\001\033[36m\002>>>\001\033[0m\002 "
 
 
 def repl(hist="myapp.history"):
@@ -16,7 +21,7 @@ def repl(hist="myapp.history"):
     try:
         while True:
             try:
-                yield input(">>> ")
+                yield input(PROMPT)
             except (EOFError, KeyboardInterrupt):
                 return
     finally:
