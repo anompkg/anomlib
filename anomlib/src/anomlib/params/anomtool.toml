@@ -134,8 +134,56 @@
     type = 'int'
 
 
-[img]
+[pic]
+[pic.type]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "t"
+    keys = ["filetype"]
 
+    help = "Set picture's filetype"
+    default = "jpg"
+
+[pic.home]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "d"
+    keys = ["directory"]
+
+    help = "Change Working Directory"
+    default = "~/Pictures/gg"
+
+[pic.ending]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "e"
+    keys = ["urlend"]
+
+    help = "Set Url's ending"
+    default = ".jpg"
+
+[pic.start]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "sa"
+    keys = ["start"]
+
+    help = "Set First Comic"
+    default = 1
+    type = 'int'
+
+[pic.stop]
+    class = "value"
+    # List of all short flags inside a string
+    shorts = "Scb"
+    keys = ["count"]
+
+    help = "Set Last Comic"
+    default = 1
+    type = 'int'
+
+
+[img]
 [img.url]
     class = "value"
     # List of all short flags inside a string
@@ -156,7 +204,6 @@
 
 
 [master]
-
 [master.output]
     class = "value"
     # List of all short flags inside a string
@@ -181,11 +228,9 @@
     help = "Test count"
 
 
+# Placeholders for Commands supported in the future
+
 [repl]
 # will be like '4g with' but for interactively working with '4g'.
-
-
 [help]
-
-
 [install]
