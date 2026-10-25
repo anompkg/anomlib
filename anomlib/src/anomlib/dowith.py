@@ -6,6 +6,8 @@ def repl(hist="myapp.history"):
     "Simple REPL-style CLI"
     history_file = Path(hist)
 
+    readline.parse_and_bind(r'"\C-r": reverse-search-history')
+
     try:
         readline.read_history_file(history_file)
     except FileNotFoundError:
@@ -14,11 +16,9 @@ def repl(hist="myapp.history"):
     try:
         while True:
             try:
-                line = input(">>> ")
+                yield input(">>> ")
             except (EOFError, KeyboardInterrupt):
                 return
-
-            yield line
     finally:
         readline.write_history_file(history_file)
 
