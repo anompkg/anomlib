@@ -35,9 +35,9 @@ that are planned to be rewritten in Python over time.
 - **Dowith**:
 Runs command-line arguments in a loop
 and supports using `readline` input as a sub-command with arguments.
-- **Picload**:
+- **[Picload][picload]**:
 Downloads collections or albums of pictures from the internet,
-such as wallpaper sets and comics.
+such as wallpaper sets and csomics.
 - **u2**:
 Parses YouTube-related data. Its future purpose is not decided yet.
 - **w2v** and **undub**:
@@ -105,3 +105,5 @@ and let all input sources simple to access and control over app.
 To lean how to write Markdown, you can check
 [GitHub-flavored Markdown](https://guides.github.com/features/mastering-markdown/)
 guide.
+
+[picload]: doc/Picload.md
