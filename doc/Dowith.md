@@ -1,38 +1,43 @@
-* Dowith
-Interactively run a sub commands in the command from arguments
+# About Dowith
 
-* Eval launcher
-Using `eval` command as a base
+Run commands in `pseudo-interactive` mode.
+Arguments given into `dowith` are treated as `interpreter`.
+`Note:` each line is being run `separately`
+and there is `no such thing` as a single session.
 
-* eval-launcher Commands
-'break' - stop interpreter cycle for exit
-Also for exit You can use Ctrl+D
+`Note:` Arguments given into `dowith` may be called a `base`, `interpreter` or `runner`.
 
-* Run only /bin/ commands and ignore aliases
-    ` dowith command `
+## Default Commands
 
+`break` and `exit` - stop `runner` cycle and exit
 
-* Run git interactively 
-    `dowith git`
-% status
-git status
+`Note:` In the future, For exit Ctrl-D is also planned.
 
-...
+## Examples
 
-nothing to commit, working tree clean
+```bash
+# Run binary commands only
+dowith command
 
-* Emulate shell inside shell
-    `dowith eval`
+# Run git pseudo-interactively
+dowith git
+# >>> status
+# runs: git status
 
-* Install all videos, pages from dowith typed links
-    `dowith youtube-dl --`
-    `dowith yt-dlp --`
-    `dowith curl --`
-    `dowith wget --`
+## Emulate shell inside shell
+dowith eval
+# We Use `eval` command as a `base runner`
 
+# You can Fetch videos, pages interactively:
+dowith youtube-dl --  # Download video from YouTube
+dowith yt-dlp --  # Download video from YouTube
+dowith curl -- # Download image/page from Internet
+dowith wget -- # Download image/page from Internet
 
-* Some interactive commands from swayconfig
-    `dowith swaymsg`
-* also some i3-config commands
-    `dowith i3-msg`
+# Run some commands from swayconfig interactively
+dowith swaymsg
 
+# Run some commands from i3config interactively
+dowith i3-msg
+
+```

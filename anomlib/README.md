@@ -32,7 +32,7 @@ without overwriting custom configurations that already exist.
 Anomlib also includes older Bash scripts
 that are planned to be rewritten in Python over time.
 
-- **Dowith**:
+- **[Dowith][dowith]**:
 Runs command-line arguments in a loop
 and supports using `readline` input as a sub-command with arguments.
 - **[Picload][picload]**:
@@ -107,3 +107,5 @@ To lean how to write Markdown, you can check
 guide.
 
 [picload]: doc/Picload.md
+
+[dowith]: doc/Dowith.md
